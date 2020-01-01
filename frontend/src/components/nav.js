@@ -13,13 +13,21 @@ function Nav() {
         <li>Home</li>
         </Link>
 
+        <Link to='/about'>
+        <li>About</li>
+        </Link>
+
         <Link to='/contact'>
         <li>Contact</li>
         </Link> 
 
          <Link to='/product'>
         <li>Product</li>
-        </Link> 
+        </Link>  
+
+         <Link to='/service'>
+        <li>Services</li>
+        </Link>
 
         <Link to='/logout'>
         <li>logout</li>

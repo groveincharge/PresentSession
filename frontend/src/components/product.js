@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ProductList from './productList'
+import './css/product.css';
 import axios from 'axios';
 
  
@@ -82,7 +83,7 @@ const [productname, setProductname] = useState('');
    list.prodlist.map(prod => console.log(prod))
 
   return ( 
-       <div>
+       <div className="Product">
     
         <form onSubmit={handleSubmit}>
          <>

@@ -1,0 +1,23 @@
+.IconBox {
+    display: flex;
+}
+.IconBoxOne {
+    flex: 1;
+    width: 20%;
+    background-color: #dcdcdc;
+}
+.IconBoxTwo {
+    flex: 1;
+    width: 20%;
+    background-color: #C0C0C0;
+}
+.IconBoxThree {
+    flex: 1;
+    width: 20%;
+    background-color: #dcdcdc;
+}
+.IconBoxFour {
+    flex: 1;
+    width: 20%;
+    background-color: #C0C0C0;
+}
