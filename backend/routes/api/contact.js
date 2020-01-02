@@ -7,7 +7,7 @@ const {authmiddleware} = require('./../auth');
 
 
 /* GET contacts listing. */
-router.get('/', (req, res, next) => {
+router.get('/', authmiddleware, (req, res, next) => {
         Contact.find()
                .select('firstName lastName email info _id')
                .exec()

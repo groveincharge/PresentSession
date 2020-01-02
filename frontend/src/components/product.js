@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import ProductList from './productList'
+import ProductList from './productList';
 import './css/product.css';
 import axios from 'axios';
 
@@ -78,9 +78,13 @@ const [productname, setProductname] = useState('');
          console.log(uploadedFile.productPath)
     })
     .catch(err => console.log(err));
-  }
+  };
+
    console.log(list.isLoaded)
-   list.prodlist.map(prod => console.log(prod))
+
+   if (list.isLoaded) {
+   list.prodlist.map(item => console.log(item))
+   }
 
   return ( 
        <div className="Product">
@@ -113,8 +117,8 @@ const [productname, setProductname] = useState('');
          productImage={filename}
          productPath={prodpath}
          />
-
-          {list.prodlist.map(item => (
+      
+         {list.prodlist.map(item => (
             <div key={item._id}>
             <p>{item.name}</p>
             <p>{item.price}</p>
@@ -122,6 +126,7 @@ const [productname, setProductname] = useState('');
             <p><img style={{ width: '50%' }} src={item.prodPath} alt='' /></p>
             </div>
           ))}
+         
        </div>
       </div>
    );

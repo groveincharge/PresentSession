@@ -9,7 +9,6 @@ import React, {Component} from 'react';
       this.state = {firstName: " ",
                     lastName: " ",
                     email: " ",
-                    username: " ",
                     password: " ",
                     confirmPassword: " "
                   };
@@ -55,7 +54,6 @@ import React, {Component} from 'react';
         firstName: " ",
         lastName: " ",
         email: " ",
-        username: " ",
         password: " ",
         confirmPassword: " " 
       })
@@ -87,12 +85,6 @@ import React, {Component} from 'react';
             Email:
             <input type="text" name="email" value={this.state.email} 
             onChange={this.handleChange} required/>
-          </><br/>
-
-          <><br/>
-           Username:
-          <input type="text" name="username" value={this.state.username} 
-          onChange={this.handleChange} required/>
           </><br/>
 
            <><br/>

@@ -6,8 +6,7 @@ const Product = require("./../../models/Product");
 const fileUpload = require('express-fileupload');
 const {authmiddleware} = require('./../auth');
 
-
-router.get('/', (req, res, next) => {
+router.get('/', authmiddleware, (req, res, next) => {
 		console.log('Inside GET /api/product callback');
 	console.log(`req.session.id: ${JSON.stringify(req.session.id)}`);
 	console.log(`req.session from GET /api/product route ${JSON.stringify(req.session)}`);
@@ -67,7 +66,7 @@ router.get('/:productId', authmiddleware, function(req, res, next) {
 });
 
 //  POST Upload Endpoint
-router.post('/', (req, res) => {
+router.post('/', authmiddleware, (req, res) => {
     console.log('Inside POST /api/product callback');
 	console.log(`req.session.id: ${JSON.stringify(req.session.id)}`);
 	console.log(`req.session from POST /api/product route ${JSON.stringify(req.session)}`);

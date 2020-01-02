@@ -7,14 +7,17 @@ const { check, validationResult } = require('express-validator');
 // create the login get and post routes
 router.get('/', (req, res) => {
        console.log('Inside GET /login callback\n')
-       console.log(`req.session.cookie ${JSON.stringify(req.session.cookie)}\n`);
+       console.log(`req.user ${JSON.stringify(req.user)}\n`);
        console.log(`req.session ${JSON.stringify(req.session)}\n`);
       console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}\n`);
       console.log(`req.session.id: ${JSON.stringify(req.session.id)}\n`);
       console.log(`req.session.user: ${JSON.stringify(req.session.user)}\n`);
   console.log(`req.sessionID from ./login GET route ${req.sessionID}\n`)
-  res.end(`You got the GET login api page!\n`)
+   console.log(`req.isAuthenticated() from ./login GET route ${req.isAuthenticated()}\n`)
+   res.end()
 });
+
+
 
  router.post('/', async (req, res, next) => {
 
@@ -60,8 +63,8 @@ router.get('/', (req, res) => {
   else
   {
 
-  //const { body: { user } } = req;
-  const user = req.body;
+   const { body: { user } } = req;
+  //const user = req.body;
 
    console.log('Inside POST /login callback\n');
    console.log(`POST user ${JSON.stringify(user)}\n`);
@@ -75,7 +78,7 @@ router.get('/', (req, res) => {
     console.log(`req.user: ${JSON.stringify(req.user)}\n`);
 
     req.login(passportUser, (err) => {
-      req.session.passportUser = req.user;
+      req.session.passportUser = passportUser;
       req.session.isLoaded = true;
 
       console.log('Inside req.login() callback\n');
@@ -93,22 +96,29 @@ router.get('/', (req, res) => {
     if ((!lastVisit) && req.isAuthenticated()) {
    // res.setHeader('Content-Type', 'application/json')
     cookies.set('LastVisit', new Date().toISOString(), { signed: true })
-    res.json({
-      message: 'Welcome, first time visitor!'
+    res.status(201).send({
+      isAuthenticated: req.isAuthenticated(),
+      sessionUser: passportUser,
+      auth_msg: 'Welcome, first time visitor!'
     })
     } 
     else
       if ((lastVisit) && req.isAuthenticated()) {
         // res.setHeader('Content-Type', 'application/json')
          cookies.set('LastVisit', new Date().toISOString(), { signed: true })
-           res.json({
-           message: 'Welcome back! Nothing much changed since your last visit at ' + lastVisit + '.'
+           res.status(201).send({
+            isAuthenticated: req.isAuthenticated(),
+            sessionUser: passportUser,
+            auth_msg: 'Welcome back! Nothing much changed since your last visit at ' + lastVisit + '.'
            })
        }  
      else
         {
     //res.setHeader('Content-Type', 'application/json')
-    res.json({message: 'You must be registered to login.'})
+    res.status(401).send({
+      isAuthenticated: req.isAuthenticated(),
+      unauth_msg: 'You must be registered to login.'
+      })
      }
   })
 

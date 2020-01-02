@@ -53,7 +53,6 @@ router.post('/', async (req, res) => {
                            firstName: user.firstName,
                            lastName: user.lastName,
                            email: user.email,
-                           username: user.username,
                            password: hash
                              })
                     newUser.save()
@@ -86,7 +85,6 @@ router.post('/', async (req, res) => {
          firstName: doc.firstName,
            lastName: doc.lastName,
              email: doc.email,
-             username: doc.username,
                _id: doc._id,
                   request: {
                       type: 'GET',
