@@ -6,7 +6,7 @@ const Product = require("./../../models/Product");
 const fileUpload = require('express-fileupload');
 const {authmiddleware} = require('./../auth');
 
-router.get('/', authmiddleware, (req, res, next) => {
+router.get('/', (req, res, next) => {
 		console.log('Inside GET /api/product callback');
 	console.log(`req.session.id: ${JSON.stringify(req.session.id)}`);
 	console.log(`req.session from GET /api/product route ${JSON.stringify(req.session)}`);

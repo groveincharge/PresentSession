@@ -18,6 +18,29 @@ const Home = () => {
                     to our customers year round.
                  </p>
                 </Jumbotron>
+          <Row className="show-container text-center" >
+            <Col xs={12} sm={4} className="person-wrapper">
+            <Image src={'/uploads/vehicle4.JPG'} className="profile-pic" width="30%" rounded/>
+            <h3>Interior</h3>
+            <p>Professional auto detailing from the people at Norfolkautodetail.com.
+              Come and experience the difference.
+            </p>
+          </Col>
+          <Col xs={12} sm={4} className="person-wrapper">
+            <Image src={'/uploads/vehicle4.JPG'} className="profile-pic" width="30%" rounded/>
+            <h3>Exterior</h3>
+            <p>Professional auto detailing from the people at Norfolkautodetail.com.
+              Come and experience the difference.
+            </p>
+          </Col>
+          <Col xs={12} sm={4} className="person-wrapper">
+            <Image src={'/uploads/vehicle4.JPG'} className="profile-pic" width="30%" rounded/>
+            <h3>Engine</h3>
+            <p>Professional auto detailing from the people at Norfolkautodetail.com.
+              Come and experience the difference.
+            </p>
+          </Col>
+           </Row>
                 <div className = "Home">
                 <Register/>
                 <Login/>

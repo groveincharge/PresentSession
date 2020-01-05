@@ -8,43 +8,20 @@ import axios from 'axios';
 const ProductUpload = () => {
  
 const [productname, setProductname] = useState('');
+const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [productprice, setProductprice] = useState(0);
    const [prodpath, setProdpath] = useState('');
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-   const [list, setList] = useState({
-           isLoaded: false,
-           prodlist: []
-   });
+   const [prodlist, setProdlist] = useState([]);
 
-  const onChange = e => {
+     const onChange = e => {
      e.persist();
     setFile(e.target.files[0]);
     setFilename(e.target.files[0].name)
     setProdpath(`/uploads/${e.target.files[0].name}`)
-  };
-
-  useEffect(() => {
-    prodList()
-  },[])
-
-    const prodList = () => {
-
-      axios.get('/api/product',{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-      })
-      .then(item => {
-        const {productList} = item.data
-        setList({
-          isLoaded: true,
-          prodlist: productList
-        })
-      })
-    .catch(err => console.log(err));
-    }
+     };
 
     const handleChange = (event) => {
     event.persist();
@@ -54,8 +31,8 @@ const [productname, setProductname] = useState('');
     else
     if (event.target.name === 'price') {
        setProductprice(event.target.value)
-    }
-    };
+       }
+      };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -72,19 +49,32 @@ const [productname, setProductname] = useState('');
         },
       })
     .then(res => {
-         const { productImage, productPath } = res.data.createdProduct;
+         const {productImage, productPath} = res.data.createdProduct;
         setUploadedFile({productImage, productPath})
-        console.log(res.data.createdProduct)
-         console.log(uploadedFile.productPath)
-    })
+      })
+      .catch(err => console.log(err));
+    };
+
+     const prodList = () => {
+
+      axios.get('/api/product',{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+      })
+      .then(item => {
+     setProdlist(item.data.productList)
+     setIsAuthenticated(item.data.isAuthenticated)
+     })
     .catch(err => console.log(err));
-  };
+    }
 
-   console.log(list.isLoaded)
+     useEffect(() => {
+         prodList()
+       },[])
 
-   if (list.isLoaded) {
-   list.prodlist.map(item => console.log(item))
-   }
+      prodlist.map(item => console.log(item))
+
 
   return ( 
        <div className="Product">
@@ -110,25 +100,12 @@ const [productname, setProductname] = useState('');
 
            <input type="submit" value="Submit"/>
          </form>
-         <div>
-         <ProductList 
-         productname={productname} 
-         productprice={productprice}
-         productImage={filename}
-         productPath={prodpath}
-         />
-      
-         {list.prodlist.map(item => (
-            <div key={item._id}>
-            <p>{item.name}</p>
-            <p>{item.price}</p>
-            <p>{item.prodImage}</p>
-            <p><img style={{ width: '50%' }} src={item.prodPath} alt='' /></p>
-            </div>
-          ))}
-         
-       </div>
+
+      <div>
+        <ProductList prodlist={prodlist}/>
       </div>
+    </div>
    );
+
 }
 export default ProductUpload;
