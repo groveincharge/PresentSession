@@ -5,7 +5,8 @@ import axios from 'axios';
 
  
  
-const ProductUpload = () => {
+const ProductUpload = (props) => {
+  console.log(props)
  
 const [productname, setProductname] = useState('');
 const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -73,8 +74,10 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
          prodList()
        },[])
 
-      prodlist.map(item => console.log(item))
-
+      prodlist.map(item => {
+       return console.log(item)
+         })
+      
 
   return ( 
        <div className="Product">

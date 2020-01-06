@@ -1,10 +1,40 @@
-import {Jumbotron, Container, Row, Col, Image, Button} from 'react-bootstrap';
 import React, {useState, useEffect} from 'react';
+import './css/about.css';
+import {Jumbotron, Container, Row, Col, Image, Button} from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import Register from './register';
 import Login from './login';
 import './css/home.css';
 
-const Home = () => {
+const Home = (props) => {
+    console.log(props)
+
+ const [message, setMessage] = useState('');
+ const [sessionUser, setSessionUser] = useState({});
+
+  useEffect(() => {
+    fetch('/api/login')
+   .then(res => res.json())
+   .then(data => {
+    if (data.auth_msg) {
+      setMessage({message: data.auth_msg})
+      setSessionUser(data.loggedinUser)
+      props.userHasAuthenticated(data.isAuthenticated)
+      alert(data.auth_msg)
+    }
+    else
+      if (data.unauth_msg) {
+         setMessage({message: data.unauth_msg})
+      alert(data.unauth_msg)
+    }
+    })
+   .catch({
+      message: 'User must be logged in.'
+   })
+     },[]);
+
+   console.log(sessionUser)
+   console.log(props.isAuthenticated)
 
     return ( 
         <div>
@@ -17,6 +47,9 @@ const Home = () => {
                     Quality is the core motto of our organization, we are available 
                     to our customers year round.
                  </p>
+                   <Link to="/about">
+                    <Button bsstyle="primary">About</Button>
+                   </Link>
                 </Jumbotron>
           <Row className="show-container text-center" >
             <Col xs={12} sm={4} className="person-wrapper">
@@ -43,7 +76,8 @@ const Home = () => {
            </Row>
                 <div className = "Home">
                 <Register/>
-                <Login/>
+                <Login sessionUser={sessionUser} 
+                       isAuthenticated={props.isAuthenticated}/>
                 </div>
             </Container>
         </div>

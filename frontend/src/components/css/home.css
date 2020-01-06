@@ -1,5 +1,5 @@
 .Jombotron {
-    margin-bottom: 4em; 
+    margin-bottom: 4em;
 }
 .person-wrapper {
     margin-bottom: 2em;
@@ -20,6 +20,5 @@ h3 {
 	 display: flex;
      align-items: center;
      justify-content: space-around;
-     padding: 1rem;
      background-color: #A9A9A9;
 }

@@ -66,7 +66,7 @@ router.get('/:productId', authmiddleware, function(req, res, next) {
 });
 
 //  POST Upload Endpoint
-router.post('/', authmiddleware, (req, res) => {
+router.post('/', (req, res) => {
     console.log('Inside POST /api/product callback');
 	console.log(`req.session.id: ${JSON.stringify(req.session.id)}`);
 	console.log(`req.session from POST /api/product route ${JSON.stringify(req.session)}`);

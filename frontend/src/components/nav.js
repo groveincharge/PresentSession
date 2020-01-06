@@ -30,7 +30,7 @@ function Nav() {
         </Link>
 
         <Link to='/logout'>
-        <li>logout</li>
+        <li>Logout</li>
         </Link>
         
       </ul>

@@ -35,10 +35,12 @@ import React, {Component} from 'react';
       .then(res => res.json())
       .then(data => {
         if (data.errors) {
-              data.errors.map(error => {
+           this.errors = data.errors.map(error => {
                 alert(error.msg);
         console.log(error.msg)
+        return error.msg
         })
+        console.log(this.errors)     
         } 
        if (data.person) {
             alert('You may now login: ' + data.person.firstName);

@@ -6,16 +6,31 @@ const { check, validationResult } = require('express-validator');
 
 // create the login get and post routes
 router.get('/', (req, res) => {
-       console.log('Inside GET /login callback\n')
+       console.log('Inside GET ./api/login callback\n')
        console.log(`req.user ${JSON.stringify(req.user)}\n`);
        console.log(`req.session ${JSON.stringify(req.session)}\n`);
       console.log(`req.session.passport: ${JSON.stringify(req.session.passport)}\n`);
       console.log(`req.session.id: ${JSON.stringify(req.session.id)}\n`);
       console.log(`req.session.user: ${JSON.stringify(req.session.user)}\n`);
-  console.log(`req.sessionID from ./login GET route ${req.sessionID}\n`)
-   console.log(`req.isAuthenticated() from ./login GET route ${req.isAuthenticated()}\n`)
-   res.end()
-});
+  console.log(`req.sessionID from ./apt/login GET route ${req.sessionID}\n`)
+   console.log(`req.isAuthenticated() from ./api/login GET route ${req.isAuthenticated()}\n`)
+
+    if (req.isAuthenticated()) {
+       res.status(200).json({
+          isAuthenticated: req.isAuthenticated(),
+           loggedinUser: req.user,
+           auth_msg: 'User Authenticated and logged In'
+        })
+       } else 
+        if (!req.isAuthenticated()) {
+          res.status(401).json({
+            isAuthenticated: req.isAuthenticated(),
+           loggedinUser: req.user,
+           unauth_msg: 'Unregister User!'
+          })
+        }
+
+    });
 
 
 
