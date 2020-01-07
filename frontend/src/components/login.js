@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import './css/login.css';
 
 
-  const Login = ({isAuthenticated, sessionUser}) => {
-       console.log(isAuthenticated)
-        console.log(sessionUser)
+  const Login = ({isAuthenticated, userHasAuthenticated}) => {
+       console.log('Login',isAuthenticated)
 
        const [email, setEmail] = useState('');
        const [password, setPassword] = useState('');
-       const [message, setMessage] = useState('');
+       const [message, setMessage] = useState('')
+       const [sessionUser, setSessionUser] = useState({})
        const [loginerrors, setLoginerrors] = useState({
               loginerrors: []
        });
@@ -43,11 +43,13 @@ import './css/login.css';
                setLoginerrors({loginerrors: errors})     
             }
           
-          if (data.auth_msg) {
+          if (data.isAuthenticated) {
                setMessage(data.auth_msg)
+               setSessionUser(data.sessionUser)
+               userHasAuthenticated(data.isAuthenticated)
               }
 
-         if (data.unauth_msg) {
+         if (!data.isAuthenticated) {
               setMessage(data.unauth_msg)
             console.log(data.unauth_msg)
            }
@@ -65,7 +67,6 @@ import './css/login.css';
                                         style={{ background: '#ADD8E6' }}>
                                        {item.msg}</p>))}
                <p style={{ background: '#ADD8E6' }}>{message}</p>
-               <p style={{ background: '#ADD8E6' }}>{sessionUser.firstName}</p>
         <form onSubmit={handleSubmit}>
           <><br/>
             Email:

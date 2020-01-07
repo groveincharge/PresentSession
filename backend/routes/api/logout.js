@@ -10,13 +10,14 @@ router.get('/', (req, res, next) => {
     console.log(`req.user: ${JSON.stringify(req.user)}\n`);
     
     if (req.isAuthenticated()){
-        res.json({auth_msg: 'you have successfully logged out.'})
+        res.json({auth_msg: 'you have successfully logged out!'})
       return req.logout();
      } 
      else
-     {
-     return res.json({unauth_msg: 'you must be logged in.'})
-       }
+       if (!req.isAuthenticated()){
+        res.json({unauth_msg: 'you must be logged in!'})
+      return req.logout();
+     } 
    });
 
 module.exports = router;

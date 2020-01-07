@@ -29,6 +29,10 @@ function Nav() {
         <li>Services</li>
         </Link>
 
+         <Link to='/login'>
+        <li>Login</li>
+        </Link>
+
         <Link to='/logout'>
         <li>Logout</li>
         </Link>

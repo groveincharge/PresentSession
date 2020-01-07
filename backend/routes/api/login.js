@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
           res.status(401).json({
             isAuthenticated: req.isAuthenticated(),
            loggedinUser: req.user,
-           unauth_msg: 'Unregister User!'
+           unauth_msg: 'Register And/Or Login To Access!'
           })
         }
 
@@ -36,8 +36,8 @@ router.get('/', (req, res) => {
 
  router.post('/', async (req, res, next) => {
 
-  //const { body: { user } } = req;
-       const user = req.body;
+  const { body: { user } } = req;
+       //const user = req.body;
 
 // Optionally define keys to sign cookie values
 // to prevent client tampering
@@ -124,7 +124,7 @@ router.get('/', (req, res) => {
            res.status(201).send({
             isAuthenticated: req.isAuthenticated(),
             sessionUser: passportUser,
-            auth_msg: 'Welcome back! Nothing much changed since your last visit at ' + lastVisit + '.'
+            auth_msg: `Welcome back ${passportUser.firstName}! Nothing much changed since your last visit at ${lastVisit}.`
            })
        }  
      else

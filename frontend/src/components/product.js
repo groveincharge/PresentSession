@@ -5,18 +5,17 @@ import axios from 'axios';
 
  
  
-const ProductUpload = (props) => {
-  console.log(props)
+const ProductUpload = ({isAuthenticated}) => {
+  console.log('ProductUpload ', isAuthenticated)
  
-const [productname, setProductname] = useState('');
-const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [productname, setProductname] = useState('');
   const [productprice, setProductprice] = useState(0);
-   const [prodpath, setProdpath] = useState('');
   const [file, setFile] = useState('');
   const [filename, setFilename] = useState('Choose File');
   const [uploadedFile, setUploadedFile] = useState({});
-   const [prodlist, setProdlist] = useState([]);
-
+   const [prodlist, setProdlist] = useState([])
+   const [prodpath, setProdpath] = useState('');
+   const emptyList = [];
      const onChange = e => {
      e.persist();
     setFile(e.target.files[0]);
@@ -65,7 +64,6 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
       })
       .then(item => {
      setProdlist(item.data.productList)
-     setIsAuthenticated(item.data.isAuthenticated)
      })
     .catch(err => console.log(err));
     }
@@ -78,7 +76,7 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
        return console.log(item)
          })
       
-
+ if (isAuthenticated) {
   return ( 
        <div className="Product">
     
@@ -109,6 +107,15 @@ const [isAuthenticated, setIsAuthenticated] = useState(false);
       </div>
     </div>
    );
+  }  
+  else {
+     return (
+            <div>
+            Register And/Or Login To Access Products
+            <ProductList prodlist={emptyList}/>
+            </div>
+            )
+     }
 
 }
 export default ProductUpload;

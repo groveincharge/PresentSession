@@ -5,6 +5,7 @@ import './css/contact.css';
     constructor(props) {
       super(props);
       console.log(props)
+       console.log(this.props.isAuthenticated)
       this.state = {firstName: " ",
                     lastName: " ",
                     email: " ",
@@ -45,6 +46,8 @@ import './css/contact.css';
     };
   
     render() {
+
+      if (this.props.isAuthenticated) {
       return (
              <div className="ContactForm">
                  <div className="ContactIntro">
@@ -100,6 +103,10 @@ import './css/contact.css';
         </div>
         </div>
       );
+     } 
+     else {
+        return (<div>Register And/Or Login To Access Contact</div>)
+     }
     }
   }
  

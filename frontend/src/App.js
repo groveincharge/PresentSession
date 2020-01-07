@@ -12,7 +12,6 @@ import Footer from './components/footer';
 import FooterNote from './components/footerNote';
 import Login from './components/login';
 import Logout from './components/logout';
-import Routes from './Routes';
 import './App.css';
 
 function App({appProps}) {
@@ -27,6 +26,7 @@ function App({appProps}) {
      <Nav/>
       <Switch>
        <AppliedRoute path="/" exact component={Home} appProps={appProps} />
+       <AppliedRoute path="/login" exact component={Login} appProps={appProps} />
       <AppliedRoute path="/about" exact component={About} appProps={appProps} />
         <AppliedRoute path="/contact" exact component={Contact} appProps={appProps} />
       <AppliedRoute path="/product" exact component={Product} appProps={appProps} />
