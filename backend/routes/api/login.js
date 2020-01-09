@@ -38,7 +38,7 @@ router.get('/', (req, res) => {
 
   const { body: { user } } = req;
        //const user = req.body;
-
+  console.log('user', user)
 // Optionally define keys to sign cookie values
 // to prevent client tampering
     const keys = [process.env.SESSION_KEY]

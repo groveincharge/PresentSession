@@ -1,0 +1,21 @@
+.Prices {
+    display: flex;
+    background-color: #778899;
+    color:#fff;
+  }
+  .Car {
+  	flex:1;
+  	border: 1px solid;
+  }
+  .Suv {
+  	flex:1;
+    border: 1px solid;
+  }
+   .Jeep {
+  	flex:1;
+    border: 1px solid;
+  }
+   .Minivan {
+  	flex:1;
+  	border: 1px solid;
+  }

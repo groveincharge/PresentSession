@@ -15,7 +15,7 @@ const ProductUpload = ({isAuthenticated}) => {
   const [uploadedFile, setUploadedFile] = useState({});
    const [prodlist, setProdlist] = useState([])
    const [prodpath, setProdpath] = useState('');
-   const emptyList = [];
+  
      const onChange = e => {
      e.persist();
     setFile(e.target.files[0]);
@@ -57,6 +57,7 @@ const ProductUpload = ({isAuthenticated}) => {
 
      const prodList = () => {
 
+   if (isAuthenticated) {
       axios.get('/api/product',{
         headers: {
           'Content-Type': 'multipart/form-data'
@@ -66,6 +67,7 @@ const ProductUpload = ({isAuthenticated}) => {
      setProdlist(item.data.productList)
      })
     .catch(err => console.log(err));
+     }
     }
 
      useEffect(() => {
@@ -76,7 +78,6 @@ const ProductUpload = ({isAuthenticated}) => {
        return console.log(item)
          })
       
- if (isAuthenticated) {
   return ( 
        <div className="Product">
     
@@ -107,15 +108,5 @@ const ProductUpload = ({isAuthenticated}) => {
       </div>
     </div>
    );
-  }  
-  else {
-     return (
-            <div>
-            Register And/Or Login To Access Products
-            <ProductList prodlist={emptyList}/>
-            </div>
-            )
-     }
-
 }
 export default ProductUpload;

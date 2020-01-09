@@ -1,19 +1,20 @@
 import React from 'react';
+import Prices from './vehicles/prices';
+import Chores from './vehicles/chores';
 
+const Service = ({isAuthenticated}) => { 
 
-const Service = (props) => { 
-	console.log(props)
-  if (props.isAuthenticated) {
+   if (isAuthenticated) {
   return (
     <div className="Services">
-     <h1>The service page</h1>
+    <Prices/>
+    <Chores/>
     </div>
-  );
-   }
-   else {
-     return (<div>Register And/Or Login To Access Services</div>)
+    )
+     } 
+     else {
+        return (<div>Register And/Or Login To Access Service</div>)
      }
-
-};
+   };
 
 export default Service;
