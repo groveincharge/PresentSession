@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 const {authmiddleware} = require('./../auth');
-const Order = require("./../../models/Order");
-const Product = require("./../../models/Product");
+//const Order = require("./../../models/Order");
+//const Product = require("./../../models/Product");
 
 
 /* GET Orders list. */

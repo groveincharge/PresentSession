@@ -2,7 +2,7 @@
 const mongoose = require( 'mongoose' ); 
 
 // Build the connection string 
-let dbURI = process.env.MONGOOSE_KEY;
+let dbURI = process.env.MONGODB_URI;
 
 // Create the database connection 
 mongoose.connect(dbURI, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}); 
@@ -32,7 +32,7 @@ process.on('SIGINT', () => {
 }); 
 
 // BRING IN YOUR SCHEMAS & MODELS // For example
-require('./User');
-require('./Contact')
+//require('./User');
+//require('./Contact')
 //require('./Product')
-require('./Order')
+//require('./Order')

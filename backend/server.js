@@ -1,4 +1,5 @@
 //npm modules
+require('rootpath')();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const uuid = require('uuid/v4')
@@ -7,11 +8,13 @@ const FileStore = require('session-file-store')(session);
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const axios = require('axios');
+const cors = require('cors');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-const User = require('./models/User');
+//const User = require('./models/User');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
+const errorHandler = require('_helpers/error-handler');
 require('dotenv').config();
 
 // create the server
@@ -22,6 +25,7 @@ const app = express();
   app.use(express.urlencoded({ extended: false }));
   app.use(cookieParser());
   app.use(fileUpload());
+  app.use(cors());
 
    //passport and session middleware
    app.use(session({
@@ -42,10 +46,17 @@ const app = express();
    app.use(flash());
 
 //models & routes
-require('./models/User');
+//require('./models/User');
 require('./models/mongoConnect');
-app.use(require('./routes'));
 app.use('uploads',express.static('./../frontend/public/uploads'))
+//app.use(require('./routes'));
+
+// api routes
+app.use('/users', require('./users/users.controller'));
+app.use('/products', require('./products/products.controller'));
+
+// global error handler
+app.use(errorHandler);
 
 // configure passport.js to use the local strategy
 passport.use(new LocalStrategy(
@@ -84,6 +95,8 @@ passport.deserializeUser(function(_id, done) {
   });
 });
 
-const port = process.env.PORT || 7000;
-
-app.listen(port, () => {console.log(`Listening on PORT ${port}`)})
+// start server
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 7000;
+const server = app.listen(port, function () {
+    console.log('Server listening on port ' + port);
+});

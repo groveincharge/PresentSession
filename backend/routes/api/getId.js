@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
 //const Users = mongoose.model('Users');
-const User = require('../../models/User');
+//const User = require('../../models/User');
 
 
 // create the getUserId route

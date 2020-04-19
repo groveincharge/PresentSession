@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const router = express.Router();
-const Product = require("./../../models/Product");
+//const Product = require("./../../models/Product");
 const fileUpload = require('express-fileupload');
 const {authmiddleware} = require('./../auth');
 
@@ -41,7 +41,7 @@ router.get('/', (req, res, next) => {
               });
    });
 
-router.get('/:productId', authmiddleware, function(req, res, next) {
+router.get('/:productId', function(req, res, next) {
 
 	const id = req.params.productId;
 	Product.findById(id)
@@ -72,26 +72,16 @@ router.post('/', (req, res) => {
 	console.log(`req.session from POST /api/product route ${JSON.stringify(req.session)}`);
 	console.log(`req.isAuthenticated from POST /api/product route ${req.isAuthenticated()}`);
 	console.log(`req.user from POST /api/product route ${req.user}`);
-	console.log(req.body)
-  if (req.files === null) {
-    return res.status(400).json({ msg: 'No file uploaded' });
-  }
+	console.log('req.body',req.body);
+	console.log('req.files',req.files)
 
-  const file = req.files.productImage;
-  console.log(file)
-  file.mv(`/Users/Grover/homefolder/workstation/PresentSession/frontend/public/uploads/${file.name}`, err => {
-    if (err) {
-      console.error(err);
-      return res.status(500).send(err);
-    }
+
+
     const newProduct = new Product({
                  _id: new mongoose.Types.ObjectId(),
                  name: req.body.name,
-                 price: req.body.price,
-                 productImage: file.name,
-                 productPath: `/uploads/${file.name}`,
-
-    });
+                 price: req.body.price
+                });
 
     newProduct.save()
           .then(result => {
@@ -109,10 +99,10 @@ router.post('/', (req, res) => {
                         }
 	                 })
                 })
-  });
-});
+           });
 
-router.delete('/:productId', authmiddleware, function(req, res, next) {
+
+router.delete('/:productId', function(req, res, next) {
 	const id = req.params.productId;
 	Product.deleteOne({ _id: id })
 	.exec()

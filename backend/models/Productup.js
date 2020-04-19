@@ -16,13 +16,11 @@ const productSchema = mongoose.Schema({
 	},	
 	productImage: {
 		type: String,
-		required:true,
 		min: 2,
 		max: 50
 	},
 	productPath: {
 		type: String,
-		required:true,
 		min: 2,
 		max: 50
 	},
@@ -34,4 +32,4 @@ const productSchema = mongoose.Schema({
 });
 
 //let Product = module.exports = mongoose.model('Product', productSchema);
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('Productup', productSchema);
