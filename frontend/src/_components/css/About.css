@@ -1,0 +1,17 @@
+.about {
+    display: flex;
+    margin:0;
+}
+.aboutus {
+    flex:1;
+     background-color: #A9A9A9;
+     text-align: center;
+     justify-content: center;
+}
+.workradius {
+    flex:1;
+    background-color: #dcdcdc;
+    text-align: center;
+    justify-content: center;
+}
+h2 {font-weight: bold;}

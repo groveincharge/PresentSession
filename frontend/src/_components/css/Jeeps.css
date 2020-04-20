@@ -1,0 +1,28 @@
+.Jeeps {
+  margin-top: 2%;
+    color: #00008B;
+  }
+
+  .jeeps-int {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .jeeps-ext {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .jeeps-full {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .jeeps-eng {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }

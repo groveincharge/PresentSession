@@ -1,0 +1,28 @@
+.Cars {
+    color: #00008B;
+    margin-top: 2%;
+  }
+
+  .cars-int {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .cars-ext {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .cars-full {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .cars-eng {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }

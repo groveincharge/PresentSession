@@ -1,0 +1,50 @@
+export const productService = {
+    addProduct,
+    getAll,
+};
+
+function addProduct(product) {
+    console.log('product.service frontend addProduct',product)
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(product)
+    };
+
+    return fetch('http://localhost:7000/products/addProduct', requestOptions)
+        .then(handleResponse)
+        .then(product => {
+            console.log('product.service frontend product',product)
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('product', JSON.stringify(product));
+
+            return product;
+        });
+};
+
+function getAll() {
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`http://localhost:7000/products/getAll`, requestOptions).then(handleResponse);
+}
+
+function handleResponse(response) {
+    console.log('reponse',response)
+    return response.text().then(text => {
+        const data = text && JSON.parse(text);
+        console.log('handleResponse data',data)
+        if (!response.ok) {
+            if (response.status === 401) {
+                console.log('data already exist.')
+            }
+
+            const error = (data && data.message) || response.statusText;
+            return Promise.reject(error);
+        }
+
+        return data;
+    });
+}

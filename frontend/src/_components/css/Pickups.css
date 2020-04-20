@@ -1,0 +1,28 @@
+.Pickups {
+    color: #00008B;
+    margin-top: 2%;
+  }
+
+  .pickups-int {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .pickups-ext {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .pickups-full {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .pickups-eng {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }

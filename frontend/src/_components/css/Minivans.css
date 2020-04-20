@@ -1,0 +1,28 @@
+.Minivans {
+    color: #00008B;
+    margin-top: 2%;
+  }
+
+  .minivans-int {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .minivans-ext {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .minivans-full {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
+
+  .minivans-eng {
+    border: 1px solid #000000;
+    text-align: center;
+    margin-bottom: 2%;
+  }
