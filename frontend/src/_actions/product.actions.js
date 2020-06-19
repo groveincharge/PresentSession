@@ -57,20 +57,20 @@ function getById(_id) {
     function failure(error) { return { type: productConstants.GETITEM_PRODUCT_FAILURE, error } }
 }
 
-function getAll(getproducts) {
-    console.log('product.actions getproducts ',getproducts)
+function getAll(items) {
+    console.log('product.actions items ',items)
     return dispatch => {
-        dispatch(request(getproducts));
+        dispatch(request(items));
 
-        productService.getAll(getproducts)
+        productService.getAll(items)
             .then(
-                getproducts => dispatch(success(getproducts)),
+                items => dispatch(success(items)),
                 error => dispatch(failure(error.toString()))
             );
     };
 
-    function request(getproducts) { return { type: productConstants.GETALL_PRODUCT_REQUEST, getproducts } }
-    function success(getproducts) { return { type: productConstants.GETALL_PRODUCT_SUCCESS, getproducts } }
+    function request(items) { return { type: productConstants.GETALL_PRODUCT_REQUEST, items } }
+    function success(items) { return { type: productConstants.GETALL_PRODUCT_SUCCESS, items } }
     function failure(error) { return { type: productConstants.GETALL_PRODUCT_FAILURE, error } }
 }
 

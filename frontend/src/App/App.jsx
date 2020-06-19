@@ -16,6 +16,7 @@ import { HomePage } from './../HomePage';
 import { LoginPage } from './../LoginPage';
 import { RegisterPage } from './../RegisterPage';
 import { ProductPage } from './../ProductPage';
+import  {CartPage}  from './../ProductPage/AddPicture/CartPage';
 import { ServicePage } from './../ServicePage';
 import {Cars} from './../ServicePage/Vehicles/Cars';
 import {Suvs} from './../ServicePage/Vehicles/Suvs';
@@ -52,6 +53,7 @@ class App extends React.Component {
                                 <PrivateRoute path="/contact" component={Contact} />
                                 <PrivateRoute path="/product" component={ProductPage} />
                                 <PrivateRoute path="/service" component={ServicePage} />
+                                <PrivateRoute path="/cart" component={CartPage} />
                             </Switch>
                         </Router>
                     </div>

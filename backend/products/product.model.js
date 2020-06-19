@@ -15,6 +15,10 @@ const schema = new Schema({
 		min: 2,
 		max: 255
 	},	
+	description: {
+		type: String,
+		required:true
+	},
 	toFilePath: {
 		type: String,
 		min: 2,

@@ -1,15 +1,15 @@
 import { productConstants } from '../_constants';
 
-export function getproducts(state = [], action) {
+export function allProduct(state = [], action) {
   switch (action.type) {
     case productConstants.GETALL_PRODUCT_REQUEST:
       return {
         loading: true,
-        getproducts: Object.assign({}, state)
+        items: Object.assign({}, action.items)
       };
     case productConstants.GETALL_PRODUCT_SUCCESS:
       return {
-        getproducts: Object.assign(state, action.getproducts)
+        items: Object.assign(state, action.items)
       };
     case productConstants.GETALL_PRODUCT_FAILURE:
       return { 
@@ -19,10 +19,10 @@ export function getproducts(state = [], action) {
       // add 'deleting:true' property to user being deleted
       return {
         ...state,
-        getproducts: state.getproducts.map(getproduct =>
-          getproduct.id === action.id
-            ? { ...getproduct, deleting: true }
-            : getproduct
+        items: state.items.map(item =>
+          item.id === action.id
+            ? { ...item, deleting: true }
+            : item
         )
       };
     case productConstants.DELETE_SUCCESS:

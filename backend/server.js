@@ -54,6 +54,7 @@ app.use('uploads',express.static('./../frontend/public/uploads'))
 // api routes
 app.use('/users', require('./users/users.controller'));
 app.use('/products', require('./products/products.controller'));
+app.use('/orders', require('./orders/orders.controller'));
 
 // global error handler
 app.use(errorHandler);

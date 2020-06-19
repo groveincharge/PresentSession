@@ -28,7 +28,7 @@ async function getAll() {
     return await Product.find()
     .exec()
     .then(docs => {
-        return docs?{getproducts: docs}: []
+        return docs?{items: docs}: []
     })
     .catch(err => console.log(err))
 }

@@ -20,14 +20,18 @@ export const  Nav = () => {
         <Link to='/contact'>
         <li>Contact</li>
         </Link> 
+
+        <Link to='/service'>
+        <li>Services</li>
+        </Link>
        
        <Link to='/product'>
         <li>Products</li>
         </Link>
 
-         <Link to='/service'>
-        <li>Services</li>
-        </Link>
+        <Link to="/cart">
+         <li><i className="fas fa-shopping-cart">shopping_cart</i></li>
+          </Link>
         
       </ul>
     </nav>
