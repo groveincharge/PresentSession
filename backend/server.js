@@ -1,5 +1,6 @@
 //npm modules
 require('rootpath')();
+const config = require('config.json');
 const express = require('express');
 const cookieParser = require('cookie-parser');
 const uuid = require('uuid/v4')
@@ -11,11 +12,12 @@ const axios = require('axios');
 const cors = require('cors');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
-//const User = require('./models/User');
+const User = require('./models/User');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
 const errorHandler = require('_helpers/error-handler');
-require('dotenv').config();
+const db = require('_helpers/db');
+//require('dotenv').config();
 
 // create the server
 const app = express();
@@ -35,7 +37,7 @@ const app = express();
       return uuid() //use UUIDs for session IDs
     },
     store: new FileStore(),
-    secret: process.env.SESSION_KEY,
+    secret: config.secret,
     cookie: {maxAge: 600000, path: '/', httpOnly: true, secure: false},
     resave: false,
     saveUninitialized: false
@@ -46,15 +48,19 @@ const app = express();
    app.use(flash());
 
 //models & routes
-//require('./models/User');
-require('./models/mongoConnect');
-app.use('uploads',express.static('./../frontend/public/uploads'))
-//app.use(require('./routes'));
+require('./models/User');
+require('./models/Order');
+require('./models/Productup');
+require('./models/Contact');
+//require('./models/mongoConnect');
+//app.use('db',require('_helpers/db'),);
+app.use('uploads',express.static('./../frontend/public/uploads'));
+app.use(require('./routes'));
 
 // api routes
-app.use('/users', require('./users/users.controller'));
-app.use('/products', require('./products/products.controller'));
-app.use('/orders', require('./orders/orders.controller'));
+app.use('/register', require('./routes/api/register'));
+app.use('/login', require('./routes/api/login'));
+app.use('/orders', require('./routes/api/order'));
 
 // global error handler
 app.use(errorHandler);

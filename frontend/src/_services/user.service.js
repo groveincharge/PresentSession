@@ -11,21 +11,22 @@ export const userService = {
     delete: _delete
 };
 
-function login(username, password) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email, password })
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
 
             return user;
-        });
+        })
+        .catch(err => {error: err});
 }
 
 function logout() {
@@ -39,7 +40,9 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/register`, requestOptions)
+           .then(handleResponse)
+           .catch(err => {error: err});
 }
 
 function getById(id) {
@@ -57,7 +60,9 @@ function register(user) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/register`, requestOptions)
+    .then(handleResponse)
+    .catch(err => {error: err});
     }
 
 function update(user) {
@@ -66,7 +71,9 @@ function update(user) {
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions)
+    .then(handleResponse)
+    .catch(err => {error: eer});
     }
  
 // prefixed function name with underscore because delete is a reserved word in javascript

@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
                _id: doc._id,
                   request: {
                       type: 'GET',
-                      url: 'http://localhost:4000/register/' + doc._id
+                      url: 'http://localhost:7000/api/register/' + doc._id
                   }
             }
           })

@@ -28,11 +28,13 @@ const userSchema = mongoose.Schema({
 		min: 6,
 		max: 1024
 	},
-	date: {
+	createdDate: {
 		type: Date,
 		required: true,
 		default: Date.now
 	    }
 });
+
+userSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('User', userSchema);
