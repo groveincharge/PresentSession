@@ -10,7 +10,7 @@
 
 # session
 /session
-
+config.json
 # production
 /build
 

@@ -39,7 +39,7 @@ class RegisterPage extends React.Component {
         this.setState({ submitted: true });
         const { user } = this.state;
         if (user.firstName && user.lastName && user.email && user.password) {
-            this.props.register(user);
+            this.props.register( user);
         }
     }
 
@@ -105,7 +105,6 @@ function mapState(state) {
 
 const actionCreators = {
     register: userActions.register
-}
-
+  };
 const connectedRegisterPage = connect(mapState, actionCreators)(RegisterPage);
 export { connectedRegisterPage as RegisterPage };

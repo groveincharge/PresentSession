@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
+const config = require('config.json');
 const Cookies = require('cookies');
 const { check, validationResult } = require('express-validator');
 
@@ -36,12 +37,15 @@ router.get('/', (req, res) => {
 
  router.post('/', async (req, res, next) => {
 
-  const { body: { user } } = req;
-       //const user = req.body;
-  console.log('user', user)
+  //const { body: { user } } = req;
+       const user = req.body;
+  console.log('user', user);
+  console.log('req.body', req.body);
+  
 // Optionally define keys to sign cookie values
 // to prevent client tampering
-    const keys = [process.env.SESSION_KEY]
+
+    const keys = [config.secret]
 
     // Create a cookies object
   const cookies = new Cookies(req, res, { keys: keys })
@@ -78,7 +82,7 @@ router.get('/', (req, res) => {
   else
   {
 
-   const { body: { user } } = req;
+   //const { body: { user } } = req;
   //const user = req.body;
 
    console.log('Inside POST /login callback\n');

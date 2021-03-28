@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+   
 const userSchema = mongoose.Schema({
 	_id: mongoose.Schema.Types.ObjectId,
 	firstName: {
@@ -35,6 +35,6 @@ const userSchema = mongoose.Schema({
 	    }
 });
 
-userSchema.set('toJSON', { virtuals: true });
+//userSchema.set('toJSON', { virtuals: true });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Customers', userSchema);

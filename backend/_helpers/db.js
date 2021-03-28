@@ -29,7 +29,7 @@ process.on('SIGINT', () => {
 
 module.exports = {
     User: require('./../models/User'),
-    Product: require('./../models/Productup'),
+    Product: require('../models/Product'),
     Order: require('./../models/Order'),
     Contact: require('./../models/Contact')
       }

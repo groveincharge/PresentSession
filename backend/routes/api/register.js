@@ -1,19 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
+const db = require('./../../_helpers/db');
 const mongoose = require('mongoose');
-const User = require('./../../models/User');
+const User = db.User
 const bcrypt = require('bcrypt');
 
 router.post('/', async (req, res) => {
-   const user = req.body;
+  const {body: {firstName, lastName, email, password, confirmPassword}} = req;
+
+  console.log(`firstName from register POST in register ${JSON.stringify(firstName)}`);
+  console.log(`lastName from register POST in register ${JSON.stringify(lastName)}`);
+  console.log(`email from register POST in register ${JSON.stringify(email)}`)
 
   await check('email', 'Invalid Credentials').isEmail().run(req)
   await check('password', 'Invalid Credentials').isLength({ min: 6 })
              .withMessage('password must be at least six chars long')
              .matches(/\d/)
             .withMessage('password must contain at least one number')
-            .equals(req.body.confirmPassword)
+            .equals(confirmPassword)
             .withMessage('passwordConfirmation field must have the same value as the password field')
             .run(req);
 
@@ -28,10 +33,8 @@ router.post('/', async (req, res) => {
       })
     return res.status(422).json({ errors: errors.array()});
     }else{
-      //const {body: {user}} = req;
 
-       console.log(`user from register POST in register ${JSON.stringify(user)}`)
-        User.find({email: user.email})
+       await User.find({email})
        .exec()
        .then(list => {
          if (list.length >= 1) {
@@ -40,7 +43,7 @@ router.post('/', async (req, res) => {
            })
          }
          else {
-          bcrypt.hash(user.password, 10, (err, hash) => {
+          bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
               return res.status(500).json({
                 error: err
@@ -48,16 +51,20 @@ router.post('/', async (req, res) => {
             }
             else
             { 
-             const newUser = new User({
+             const NewUser = new User({
                            _id: new mongoose.Types.ObjectId(),
-                           firstName: user.firstName,
-                           lastName: user.lastName,
-                           email: user.email,
+                           firstName,
+                           lastName,
+                           email,
                            password: hash
-                             })
-                    newUser.save()
-                        .then(result => {
-                                    res.status(201).json({ person: result })
+                             });
+                       console.log(`NewUser ${NewUser}`)                 
+                 NewUser.save()
+                        .then(user => {
+                                    res.status(201).json(loggedInUser = {
+                                                           email,
+                                                           password
+                                                           })
                                   })
                                   .catch(err => {
                                     res.status(500).json({

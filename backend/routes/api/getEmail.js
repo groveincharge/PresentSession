@@ -15,7 +15,6 @@ router.get('/:email', (req, res) => {
                       message: 'User found',
                       _id: user[0]._id,
                       email: user[0].email,
-                      username: user[0].username,
                       password: user[0].password
        });
     }else{

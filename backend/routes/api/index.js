@@ -9,5 +9,7 @@ router.use('/register', require('./register'));
 router.use('/contact', require('./contact'));
 router.use('/product', require('./product'));
 router.use('/order', require('./order'));
+router.use('/create', require('./create'));
+
 
 module.exports = router;
