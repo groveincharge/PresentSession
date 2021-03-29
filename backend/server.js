@@ -11,7 +11,10 @@ const LocalStrategy = require('passport-local').Strategy;
 const cors = require('cors');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
+const bcrypt = require('bcrypt');
 const errorHandler = require('_helpers/error-handler');
+const db = require('./_helpers/db');
+const User = db.User;
 
 // create the server
 const app = express();
@@ -43,7 +46,7 @@ const app = express();
 
 //models & routes
 app.use('uploads',express.static('./../frontend/public/uploads'));
-app.use('/',require('./routes'));
+app.use('/',require('./routes/home'));
 app.use('/register', require('./routes/api/register'));
 app.use('/login', require('./routes/api/login'));
 app.use('/orders', require('./routes/api/order'));

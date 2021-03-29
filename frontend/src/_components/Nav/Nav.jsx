@@ -9,27 +9,27 @@ export const  Nav = () => {
        <div className='spacer'/>
       <ul className= 'nav-links' > 
 
-      <Link to='./HomePage'>
+      <Link to='/'>
         <li>Home</li>
         </Link>
 
-        <Link to='./About'>
+        <Link to='/about'>
         <li>About</li>
         </Link>
 
-        <Link to='./Contact'>
+        <Link to='/contact'>
         <li>Contact</li>
         </Link> 
 
-        <Link to='./ServicePage'>
+        <Link to='/service'>
         <li>Services</li>
         </Link>
        
-       <Link to='./ProductPage'>
+       <Link to='/product'>
         <li>Products</li>
         </Link>
 
-        <Link to="./Intro">
+        <Link to="/cart">
          <li><i className="fas fa-shopping-cart">shopping_cart</i></li>
           </Link>
         

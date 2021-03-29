@@ -41,7 +41,7 @@ function getAll() {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/register`, requestOptions)
+    return fetch(`${config.apiUrl}/home`, requestOptions)
            .then(handleResponse)
            .catch(err => {error: err});
 }
@@ -71,7 +71,7 @@ function register(user) {
     .then(handleResponse)
     .then(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-       // localStorage.setItem('user', JSON.stringify(user));
+        localStorage.setItem('user', JSON.stringify(user));
         login(loggedInUser);
         return user;
     })
@@ -96,7 +96,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/home/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

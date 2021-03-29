@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { userConstants } from '../_constants';
 import { userService } from '../_services';
 import { alertActions } from './';
@@ -24,7 +25,8 @@ function login(user) {
             .then(
                 user => { 
                     dispatch(success(user));
-                    history.push('./HomePage');
+                    history.push('/');
+                    dispatch(alertActions.success('login successful'));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -51,7 +53,7 @@ function register(user) {
             .then(
                 user => { 
                     dispatch(success());
-                    history.push('./');
+                    history.push('/');
                     dispatch(alertActions.success('Registration successful'));
                  },
                 error => {

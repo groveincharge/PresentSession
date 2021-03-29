@@ -25,7 +25,7 @@ class HomePage extends React.Component {
                 {users.items &&
                     <ul>
                         {users.items.map((user, index) =>
-                            <li key={user.id} className="text-info">
+                            <li key={user._id} className="text-info">
                                 {user.firstName + ' ' + user.lastName}
                                 {
                                     user.deleting ? <em> - Deleting...</em>

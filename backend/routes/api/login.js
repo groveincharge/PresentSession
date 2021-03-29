@@ -107,7 +107,7 @@ router.get('/', (req, res) => {
       console.log(`passportUser inside req.login ${JSON.stringify(passportUser)}\n`);
       console.log(`req.session.id: ${JSON.stringify(req.session.id)}\n`);
       console.log(`req.user: ${JSON.stringify(req.user)}\n`);
-     // return res.send('You were authenticated & logged in!\n');
+       return res.send('You were authenticated & logged in!\n');
 
       // Get a cookie
      const lastVisit = cookies.get('LastVisit', { signed: true })
