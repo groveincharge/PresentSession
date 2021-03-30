@@ -2,11 +2,12 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const router = express.Router();
-//const Product = require("./../../models/Product");
 const fileUpload = require('express-fileupload');
 const {authmiddleware} = require('./../auth');
+const db = require('./../../_helpers/db');
+const Product = db.Product;
 
-router.get('/', (req, res, next) => {
+router.get('/', authmiddleware, (req, res, next) => {
 		console.log('Inside GET /api/product callback');
 	console.log(`req.session.id: ${JSON.stringify(req.session.id)}`);
 	console.log(`req.session from GET /api/product route ${JSON.stringify(req.session)}`);

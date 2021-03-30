@@ -1,13 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+const db = require('./../../_helpers/db');
 const {authmiddleware} = require('./../auth');
-//const Order = require("./../../models/Order");
-//const Product = require("./../../models/Product");
+const Order = db.Order;
+const Product = db.Product;
 
 
 /* GET Orders list. */
-router.get('/', (req, res, next) => {
+router.get('/', authmiddleware, (req, res, next) => {
         Order.find()
              .select('product quantity _id')
              .populate('product')

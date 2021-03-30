@@ -3,6 +3,8 @@ export const productService = {
     getAll,
 };
 
+import config from 'config';
+
 function addProduct(product) {
     console.log('product.service frontend addProduct',product)
     const requestOptions = {
@@ -11,7 +13,7 @@ function addProduct(product) {
         body: JSON.stringify(product)
     };
 
-    return fetch('http://localhost:7000/products/addProduct', requestOptions)
+    return fetch(`${config.apiUrl}/product`, requestOptions)
         .then(handleResponse)
         .then(product => {
             console.log('product.service frontend product',product)
@@ -28,7 +30,7 @@ function getAll() {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`http://localhost:7000/products/getAll`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/product`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

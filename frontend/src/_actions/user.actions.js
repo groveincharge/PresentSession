@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { userConstants } from '../_constants';
-import { userService } from '../_services';
+import { userConstants } from './../_constants';
+import { userService } from './../_services';
 import { alertActions } from './';
-import { history } from '../_helpers';
+import { history } from './../_helpers';
 
 export const userActions = {
     login,
@@ -12,21 +12,22 @@ export const userActions = {
     delete: _delete
 };
 
-function login(user) {
-    
-    const loggedInUser = {
-                   email: user.email,
-                   password: user.password
-           };
-    return dispatch => {
-        dispatch(request(loggedInUser));
+function login(email, password) {
 
-        userService.login(loggedInUser)
+    const user = {
+           email,
+           password
+          };
+    
+    return dispatch => {
+        dispatch(request(user));
+
+        userService.login(user)
             .then(
-                user => { 
-                    dispatch(success(user));
+                loggedInUser => { 
+                    dispatch(success(loggedInUser));
                     history.push('/');
-                    dispatch(alertActions.success('login successful'));
+                    dispatch(alertActions.success(loggedInUser.auth_msg));
                 },
                 error => {
                     dispatch(failure(error.toString()));
@@ -53,7 +54,7 @@ function register(user) {
             .then(
                 user => { 
                     dispatch(success());
-                    history.push('/');
+                    history.push('/login');
                     dispatch(alertActions.success('Registration successful'));
                  },
                 error => {

@@ -52,7 +52,6 @@ app.use('/login', require('./routes/api/login'));
 app.use('/orders', require('./routes/api/order'));
 app.use('/product', require('./routes/api/product'));
 app.use('/contact', require('./routes/api/contact'));
-app.use('/create', require('./routes/api/create'));
 
 // global error handler
 app.use(errorHandler);

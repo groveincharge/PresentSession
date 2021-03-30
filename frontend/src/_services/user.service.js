@@ -11,21 +11,24 @@ export const userService = {
     delete: _delete
 };
 
-function login(loggedInUser) {
+function login(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(loggedInUser)
+        body: JSON.stringify(user)
     };
 
     return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(handleResponse)
-        .then(user => {
+        .then(login_data => {
+            const {loggedInUser, auth_msg, isAuthenticated} = login_data;
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-            console.log(`user from inside user.service login ${user}`);
+            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
+            localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
+            console.log(`loggegInUser from inside user.service login ${loggedInUser}`);
+            console.log(`auth_msg ${auth_msg}`);
 
-            return user;
+            return login_data;
         })
         .catch(err => {error: err});
 }
@@ -38,11 +41,12 @@ function logout() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: { 'Content-Type': 'application/json' },
     };
 
-    return fetch(`${config.apiUrl}/home`, requestOptions)
+    return fetch(`${config.apiUrl}/`, requestOptions)
            .then(handleResponse)
+           .then(users => {return users})
            .catch(err => {error: err});
 }
 
@@ -55,12 +59,7 @@ function getById(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
-
-    const loggedInUser = {
-        email: user.email,
-        password: user.password
-         };
+ function register(user) {
 
     const requestOptions = {
         method: 'POST',
@@ -71,8 +70,7 @@ function register(user) {
     .then(handleResponse)
     .then(user => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user));
-        login(loggedInUser);
+       // localStorage.setItem('user', JSON.stringify(user));
         return user;
     })
     .catch(err => {error: err});
@@ -86,7 +84,7 @@ function update(user) {
     };
     return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions)
     .then(handleResponse)
-    .catch(err => {error: eer});
+    .catch(err => {error: err});
     }
  
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -96,7 +94,7 @@ function _delete(id) {
         headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/home/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

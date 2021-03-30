@@ -1,9 +1,10 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
-//const Contact = require('./../../models/Contact');
+const db = require('./../../_helpers/db');
 const {authmiddleware} = require('./../auth');
-//const Contact = mongoose.model('Contact');
+const Contact = db.Contact;
+
 
 
 /* GET contacts listing. */

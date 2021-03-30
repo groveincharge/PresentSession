@@ -8,10 +8,10 @@ const {authmiddleware} = require('./auth');
 router.get('/', authmiddleware, function(req, res, next) {
 
 	User.find()
-	.exec()
-    .then(docs => {
+      .exec()
+      .then(docs => {
     	console.log(docs);
-    	res.status(200).json(docs);
+    	res.status(200).json({users: docs});
   })
     .catch(err => {
     	console.log(err);
