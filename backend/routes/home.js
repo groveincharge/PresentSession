@@ -5,18 +5,32 @@ const db = require('./../_helpers/db');
 const User = db.User;
 const {authmiddleware} = require('./auth');
 
-router.get('/', authmiddleware, function(req, res, next) {
-
-	User.find()
+router.get('/', function(req, res, next) {
+   User.find()
       .exec()
-      .then(docs => {
-    	console.log(docs);
-    	res.status(200).json({users: docs});
-  })
-    .catch(err => {
-    	console.log(err);
-        res.status(500).json({error: err })
-     });
+      .then(users => {
+         res.status(200).json(users);
+      })
+      .catch(err => {
+       res.status(500).json({
+             message: 'List failed to load.',
+             error: err
+       })
+     })
 });
+
+router.delete('/:userId', function(req, res, next) {
+	const id = req.params.userId;
+	User.deleteOne({ _id: id })
+	.exec()
+	.then(result => {
+		res.status(200).json(result);
+	})
+	.catch(err => {
+		console.log(err);
+		res.status(500).json({ error: err });
+	  });
+	});
+
 
 module.exports = router; 

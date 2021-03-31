@@ -21,11 +21,10 @@ function login(email, password) {
     
     return dispatch => {
         dispatch(request(user));
-
         userService.login(user)
             .then(
                 loggedInUser => { 
-                    dispatch(success(loggedInUser));
+                    dispatch(success(loggedInUser.loggedInUser));
                     history.push('/');
                     dispatch(alertActions.success(loggedInUser.auth_msg));
                 },
@@ -85,18 +84,18 @@ function getAll() {
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
+function _delete(_id) {
     return dispatch => {
-        dispatch(request(id));
+        dispatch(request(_id));
 
-        userService.delete(id)
+        userService.delete(_id)
             .then(
-                user => dispatch(success(id)),
-                error => dispatch(failure(id, error.toString()))
+                user => dispatch(success(user._id)),
+                error => dispatch(failure(user._id, error.toString()))
             );
     };
 
-    function request(id) { return { type: userConstants.DELETE_REQUEST, id } }
-    function success(id) { return { type: userConstants.DELETE_SUCCESS, id } }
-    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, id, error } }
+    function request(id) { return { type: userConstants.DELETE_REQUEST, _id } }
+    function success(id) { return { type: userConstants.DELETE_SUCCESS, _id } }
+    function failure(id, error) { return { type: userConstants.DELETE_FAILURE, _id, error } }
 }

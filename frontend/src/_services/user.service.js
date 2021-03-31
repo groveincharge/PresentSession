@@ -46,9 +46,13 @@ function getAll() {
 
     return fetch(`${config.apiUrl}/`, requestOptions)
            .then(handleResponse)
-           .then(users => {return users})
+           .then(users => {
+            localStorage.setItem('users', JSON.stringify(users));
+               //console.log(`users inside getAll ${users}`);
+               return users;
+             })
            .catch(err => {error: err});
-}
+};
 
 function getById(id) {
     const requestOptions = {
@@ -91,7 +95,7 @@ function update(user) {
 function _delete(id) {
     const requestOptions = {
         method: 'DELETE',
-        headers: authHeader()
+        headers: { 'Content-Type': 'application/json' },
     };
 
     return fetch(`${config.apiUrl}/${id}`, requestOptions).then(handleResponse);

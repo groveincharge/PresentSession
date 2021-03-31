@@ -49,7 +49,7 @@ class App extends React.Component {
                                 <PrivateRoute exact path="/" component={HomePage} />
                                 <Route path="/login" component={LoginPage} />
                                 <Route path="/register" component={RegisterPage} />
-                                <Route path="/about" component={RegisterPage} />
+                                <Route path="/about" component={About} />
                                 <PrivateRoute path="/contact" component={Contact} />
                                 <PrivateRoute path="/product" component={ProductPage} />
                                 <PrivateRoute path="/service" component={ServicePage} />
