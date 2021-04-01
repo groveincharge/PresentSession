@@ -9,10 +9,6 @@ const bcrypt = require('bcrypt');
 router.post('/', async (req, res) => {
   const {body: {firstName, lastName, email, password, confirmPassword}} = req;
 
-  console.log(`firstName from register POST in register ${JSON.stringify(firstName)}`);
-  console.log(`lastName from register POST in register ${JSON.stringify(lastName)}`);
-  console.log(`email from register POST in register ${JSON.stringify(email)}`)
-
   await check('email', 'Invalid Credentials').isEmail().run(req)
   await check('password', 'Invalid Credentials').isLength({ min: 6 })
              .withMessage('password must be at least six chars long')
@@ -31,7 +27,10 @@ router.post('/', async (req, res) => {
       errors.errors.map(error => {
         console.log(`Register error from POST: ${JSON.stringify(error.msg)}`)
       })
-    return res.status(422).json({ errors: errors.array()});
+      console.log(`Register array(). from POST: ${JSON.stringify(errors.array())}`)
+    return res.status(422).json({ 
+                            error: errors.array().msg
+                          });
     }else{
 
        await User.find({email})
@@ -46,7 +45,7 @@ router.post('/', async (req, res) => {
           bcrypt.hash(password, 10, (err, hash) => {
             if (err) {
               return res.status(500).json({
-                error: err
+               message: err
               });
             }
             else
@@ -60,16 +59,16 @@ router.post('/', async (req, res) => {
                              });
                        console.log(`NewUser ${NewUser}`)                 
                  NewUser.save()
-                        .then(user => {
-                                    res.status(201).json(loggedInUser = {
-                                                           email,
-                                                           password
-                                                           })
+                        .then(regUser => {
+                                res.status(201).json({
+                                  regUser,
+                                  msg: `${regUser.firstName} Registered Successfully.`
+                                   })
                                   })
                                   .catch(err => {
                                     res.status(500).json({
-                                      message: 'User Already Registered',
-                                         error: err
+                                    msg: 'User Already Registered',
+                                    error: err
                                     })
                                   }) 
                       

@@ -51,15 +51,18 @@ function register(user) {
 
         userService.register(user)
             .then(
-                user => { 
-                    dispatch(success());
+                regUser => { 
+                    dispatch(success(regUser.regUser));
                     history.push('/login');
-                    dispatch(alertActions.success('Registration successful'));
+                    dispatch(alertActions.success(regUser.msg));
                  },
                 error => {
-                    dispatch(failure(error.toString()));
-                    dispatch(alertActions.error(error.toString()));
-                });
+                    dispatch(failure(error.error));
+                    dispatch(alertActions.error(error.error));
+                })
+                .catch(err => {
+                    msg: err
+                })
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }

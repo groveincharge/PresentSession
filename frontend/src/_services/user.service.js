@@ -72,11 +72,17 @@ function getById(id) {
     };
     return fetch(`${config.apiUrl}/register`, requestOptions)
     .then(handleResponse)
-    .then(user => {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-       // localStorage.setItem('user', JSON.stringify(user));
-        return user;
-    })
+    .then(
+        regUser => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('regUser', JSON.stringify(regUser.regUser));
+            return regUser;
+        },
+        error => {
+            localStorage.setItem('errors', JSON.stringify(error.error));
+            console.log(`error.error ${error.error}`)
+            return error.error;
+        })
     .catch(err => {error: err});
     };
 
