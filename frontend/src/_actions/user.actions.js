@@ -56,9 +56,9 @@ function register(user) {
                     history.push('/login');
                     dispatch(alertActions.success(regUser.msg));
                  },
-                error => {
-                    dispatch(failure(error.error));
-                    dispatch(alertActions.error(error.error));
+                regErrors => {
+                    dispatch(failure(regErrors));
+                    dispatch(alertActions.error(regErrors));
                 })
                 .catch(err => {
                     msg: err

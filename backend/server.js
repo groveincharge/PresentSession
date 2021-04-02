@@ -12,7 +12,7 @@ const cors = require('cors');
 const flash = require('connect-flash');
 const fileUpload = require('express-fileupload');
 const bcrypt = require('bcrypt');
-const errorHandler = require('_helpers/error-handler');
+const errorHandler = require('./_helpers/error-handler');
 const db = require('./_helpers/db');
 const User = db.User;
 

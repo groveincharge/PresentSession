@@ -74,15 +74,15 @@ function getById(id) {
     .then(handleResponse)
     .then(
         regUser => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
+              // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('regUser', JSON.stringify(regUser.regUser));
-            return regUser;
-        },
-        error => {
-            localStorage.setItem('errors', JSON.stringify(error.error));
-            console.log(`error.error ${error.error}`)
-            return error.error;
-        })
+            return regUser
+              },
+        regErrors => {
+                localStorage.setItem('errors', JSON.stringify(regErrors.regErrors));
+                console.log(`errors ${JSON.stringify(regErrors.regErrors)}`);
+              return regErrors;
+               })
     .catch(err => {error: err});
     };
 

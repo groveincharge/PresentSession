@@ -19,20 +19,20 @@ router.post('/', async (req, res) => {
             .run(req);
 
   const errors = validationResult(req);
-        req.session.user = {};
-        req.session.isLoaded = false;
 
   if (!errors.isEmpty()) {
-      req.session.errors = errors;
-      errors.errors.map(error => {
-        console.log(`Register error from POST: ${JSON.stringify(error.msg)}`)
-      })
-      console.log(`Register array(). from POST: ${JSON.stringify(errors.array())}`)
-    return res.status(422).json({ 
-                            error: errors.array().msg
-                          });
-    }else{
+      req.session.errors = errors.errors;
 
+     const regErrors = req.session.errors.map(error => {
+                return error.msg
+                      })
+        res.status(422).json(regErrors);
+        console.log(`regErrors register ${JSON.stringify(regErrors)}`);
+
+        return regErrors;        
+    }
+    else
+       {
        await User.find({email})
        .exec()
        .then(list => {
@@ -62,13 +62,12 @@ router.post('/', async (req, res) => {
                         .then(regUser => {
                                 res.status(201).json({
                                   regUser,
-                                  msg: `${regUser.firstName} Registered Successfully.`
+                                  msg: `${regUser.firstName} Registered Successfully.`,
                                    })
                                   })
                                   .catch(err => {
                                     res.status(500).json({
-                                    msg: 'User Already Registered',
-                                    error: err
+                                    msg: 'User Already Registered'
                                     })
                                   }) 
                       
