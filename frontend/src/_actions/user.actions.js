@@ -23,12 +23,14 @@ function login(email, password) {
         dispatch(request(user));
         userService.login(user)
             .then(
-                loggedInUser => { 
-                    dispatch(success(loggedInUser.loggedInUser));
+                user => { 
+                    console.log(`user from inside user.actions then ${JSON.stringify(user)}`);
+                    dispatch(success(user));
                     history.push('/');
-                    dispatch(alertActions.success(loggedInUser.auth_msg));
+                    dispatch(alertActions.success(user.message));
                 },
                 error => {
+                    console.log(`error from inside user.actions then ${JSON.stringify(error)}`);
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
                 }
@@ -44,25 +46,25 @@ function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
-
+  
 function register(user) {
     return dispatch => {
         dispatch(request(user));
-
+        console.log(`user from above user.actions then() ${JSON.stringify(user)}`)
         userService.register(user)
             .then(
-                regUser => { 
-                    dispatch(success(regUser.regUser));
+                user => { 
+                    console.log(`user from inside user.actions then() ${JSON.stringify(user)}`)
+                    dispatch(success());
                     history.push('/login');
-                    dispatch(alertActions.success(regUser.msg));
-                 },
-                regErrors => {
-                    dispatch(failure(regErrors));
-                    dispatch(alertActions.error(regErrors));
-                })
-                .catch(err => {
-                    msg: err
-                })
+                    dispatch(alertActions.success('Registration successful'));
+                },
+                error => {
+                    console.log(`error from inside user.actions then() error ${JSON.stringify(JSON.stringify(error))}`)
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                }
+            );
     };
 
     function request(user) { return { type: userConstants.REGISTER_REQUEST, user } }

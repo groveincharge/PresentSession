@@ -11,26 +11,21 @@ export const userService = {
     delete: _delete
 };
 
-function login(user) {
+function login(username, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify({ username, password })
     };
 
-    return fetch(`${config.apiUrl}/login`, requestOptions)
+    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
-        .then(login_data => {
-            const {loggedInUser, auth_msg, isAuthenticated} = login_data;
+        .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
-            localStorage.setItem('isAuthenticated', JSON.stringify(isAuthenticated));
-            console.log(`loggegInUser from inside user.service login ${loggedInUser}`);
-            console.log(`auth_msg ${auth_msg}`);
+            localStorage.setItem('user', JSON.stringify(user));
 
-            return login_data;
-        })
-        .catch(err => {error: err});
+            return user;
+        });
 }
 
 function logout() {
@@ -41,18 +36,11 @@ function logout() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/`, requestOptions)
-           .then(handleResponse)
-           .then(users => {
-            localStorage.setItem('users', JSON.stringify(users));
-               //console.log(`users inside getAll ${users}`);
-               return users;
-             })
-           .catch(err => {error: err});
-};
+    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+}
 
 function getById(id) {
     const requestOptions = {
@@ -63,28 +51,15 @@ function getById(id) {
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
- function register(user) {
-
+function register(user) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(`${config.apiUrl}/register`, requestOptions)
-    .then(handleResponse)
-    .then(
-        regUser => {
-              // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('regUser', JSON.stringify(regUser.regUser));
-            return regUser
-              },
-        regErrors => {
-                localStorage.setItem('errors', JSON.stringify(regErrors.regErrors));
-                console.log(`errors ${JSON.stringify(regErrors.regErrors)}`);
-              return regErrors;
-               })
-    .catch(err => {error: err});
-    };
+
+    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+}
 
 function update(user) {
     const requestOptions = {
@@ -92,19 +67,18 @@ function update(user) {
         headers: { ...authHeader(), 'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions)
-    .then(handleResponse)
-    .catch(err => {error: err});
-    }
- 
+
+    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+}
+
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
     const requestOptions = {
         method: 'DELETE',
-        headers: { 'Content-Type': 'application/json' },
+        headers: authHeader()
     };
 
-    return fetch(`${config.apiUrl}/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -120,7 +94,6 @@ function handleResponse(response) {
             const error = (data && data.message) || response.statusText;
             return Promise.reject(error);
         }
-
         return data;
     });
 }
