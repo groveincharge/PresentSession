@@ -21,16 +21,13 @@ router.post('/', async (req, res) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-      req.session.errors = errors.errors;
-
-     const regErrors = req.session.errors.map(error => {
-                return error.msg
-                      })
-        res.status(422).json(regErrors);
-        console.log(`regErrors register ${JSON.stringify(regErrors)}`);
-
-        return regErrors;        
-    }
+      
+     return res.status(422).json({
+                          message: errors.errors.map(error => {
+                            return error.msg
+                          })
+                        });      
+        }
     else
        {
        await User.find({email})
@@ -39,44 +36,39 @@ router.post('/', async (req, res) => {
          if (list.length >= 1) {
            return res.status(409).json({
              message: 'Email already registered'
-           })
-         }
-         else {
-          bcrypt.hash(password, 10, (err, hash) => {
-            if (err) {
-              return res.status(500).json({
-               message: err
-              });
+                          })
             }
-            else
-            { 
-             const NewUser = new User({
-                           _id: new mongoose.Types.ObjectId(),
-                           firstName,
-                           lastName,
-                           email,
-                           password: hash
-                             });
-                       console.log(`NewUser ${NewUser}`)                 
-                 NewUser.save()
-                        .then(regUser => {
-                                res.status(201).json({
-                                  regUser,
-                                  msg: `${regUser.firstName} Registered Successfully.`,
-                                   })
-                                  })
-                                  .catch(err => {
-                                    res.status(500).json({
-                                    msg: 'User Already Registered'
-                                    })
-                                  }) 
-                      
-                      };
-                    });
-         }
-       });
-    }
-});
+         else 
+             {
+          bcrypt.hash(password, 10, (err, hash) => {
+                                if (err) {
+                                    return res.status(500).json({
+                                                          message: err
+                                                               });
+                                   }
+                                   else
+                                      { 
+                                     const NewUser = new User({
+                                    _id: new mongoose.Types.ObjectId(),
+                                     firstName,
+                                     lastName,
+                                     email,
+                                     password: hash
+                                     });
+                                       console.log(`NewUser ${NewUser}`)                 
+                                          return NewUser.save()
+                                                        .then(user => {
+                                                          res.status(201).json({
+                                                            user,
+                                                            messsage: 'Registered!'
+                                                          })
+                                                        })
+                                     };
+                                });
+                }
+            });
+       }
+  });
 
  router.get('/', (req, res, next) => {
     User.find()
