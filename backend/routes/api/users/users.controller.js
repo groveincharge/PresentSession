@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { check, validationResult } = require('express-validator');
 const userService = require('./user.service');
 
 // routes
@@ -19,11 +20,34 @@ function authenticate(req, res, next) {
         .catch(err => next(err));
 }
 
-function register(req, res, next) {
-    userService.create(req.body)
+async function register(req, res, next) {
+    const {confirmPassword} = req.body;
+
+    await check('email', 'Invalid Credentials').isEmail().run(req)
+    await check('password', 'Invalid Credentials').isLength({ min: 6 })
+               .withMessage('password must be at least six chars long')
+               .matches(/\d/)
+              .withMessage('password must contain at least one number')
+              .equals(confirmPassword)
+              .withMessage('passwordConfirmation field must have the same value as the password field')
+              .run(req);
+  
+    const errors = validationResult(req);
+  
+    if (!errors.isEmpty()) {
+        
+       return res.status(422).json({
+                            message: errors.errors.map(error => {
+                              return error.msg
+                            })
+                          });      
+          }
+         else {
+    await userService.create(req.body)
         .then(() => res.json({}))
         .catch(err => next(err));
-}
+         }
+};
 
 function getAll(req, res, next) {
     userService.getAll()
