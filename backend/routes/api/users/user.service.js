@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const db = require('./../../../_helpers/db');
+const passport = require('passport');
 const User = db.User;
 
 module.exports = {
@@ -14,15 +15,8 @@ module.exports = {
     delete: _delete
 };
 
-async function authenticate({ email, password }) {
-    const user = await User.findOne({ email });
-    if (user && bcrypt.compareSync(password, user.password)) {
-        const token = jwt.sign({ sub: user.id }, config.secret, { expiresIn: '7d' });
-        return {
-            ...user.toJSON(),
-            token
-        };
-    }
+async function authenticate(user) {
+   return user;      
 }
 
 async function getAll() {
