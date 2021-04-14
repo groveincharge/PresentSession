@@ -27,7 +27,7 @@ function login(email, password) {
                     console.log(`user from inside user.actions then ${JSON.stringify(user)}`);
                     dispatch(success(user));
                     history.push('/');
-                    dispatch(alertActions.success(user.message));
+                    dispatch(alertActions.success('Login successful'));
                 },
                 error => {
                     console.log(`error from inside user.actions then ${JSON.stringify(error)}`);
