@@ -16,6 +16,7 @@ module.exports = {
 };
 
 async function authenticate(user) {
+    console.log(`user from inside authenticate ${JSON.stringify(user)}`)
    return user;      
 }
 
