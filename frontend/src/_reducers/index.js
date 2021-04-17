@@ -5,7 +5,7 @@ import { registration } from './registration.reducer';
 import { users } from './users.reducer';
 import { product } from './product.reducer';
 import { allProduct } from './allProduct.reducer';
-import { cartReducer } from './cart.reducer';
+import { cart } from './cart.reducer';
 import { alert } from './alert.reducer';
 
 const rootReducer = combineReducers({
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   users,
   product,
   allProduct,
-  cartReducer,
+  cart,
   alert
 });
 

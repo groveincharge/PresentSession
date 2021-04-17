@@ -22,8 +22,7 @@ function login(email, password) {
     return dispatch => {
         dispatch(request(user));
         userService.login(user)
-            .then(
-                user => { 
+            .then(user => { 
                     console.log(`user from inside user.actions then ${JSON.stringify(user)}`);
                     dispatch(success(user));
                     history.push('/');
@@ -33,8 +32,7 @@ function login(email, password) {
                     console.log(`error from inside user.actions then ${JSON.stringify(error)}`);
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
-                }
-            );
+                });
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
@@ -46,8 +44,8 @@ function logout() {
     userService.logout();
     return { type: userConstants.LOGOUT };
 }
-  
-function register(user) {
+
+ function register(user) {
     return dispatch => {
         dispatch(request(user));
         console.log(`user from above user.actions then() ${JSON.stringify(user)}`)

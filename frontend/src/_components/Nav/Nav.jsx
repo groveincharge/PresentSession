@@ -29,8 +29,12 @@ export const  Nav = () => {
         <li>Products</li>
         </Link>
 
+        <Link to='/logout'>
+        <li>logout</li>
+        </Link>
+
         <Link to="/cart">
-         <li><i className="fas fa-shopping-cart">shopping_cart</i></li>
+         <li><i className="fas fa-shopping-cart">cart</i></li>
           </Link>
         
       </ul>

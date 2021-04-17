@@ -1,5 +1,5 @@
 import config from 'config';
-import { authHeader } from '../_helpers';
+//import { authHeader } from '../_helpers';
 
 export const userService = {
     login,
@@ -18,13 +18,13 @@ function login(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+     fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
         .then(handleResponse)
         .then(user => {
-            console.log(`user from inside user.service. authenticate ${JSON.stringify(user)}`)
             // store user details and jwt token in local storage to keep user logged in between page refreshes
+            localStorage.setItem('authenticated', JSON.stringify(user.authenticated));
             localStorage.setItem('user', JSON.stringify(user));
-
+            console.log(`user from inside user.service. authenticate ${JSON.stringify(user)}`);
             return user;
         });
 }
@@ -37,7 +37,7 @@ function logout() {
 function getAll() {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: { 'Content-Type': 'application/json' }
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
@@ -46,7 +46,7 @@ function getAll() {
 function getById(id) {
     const requestOptions = {
         method: 'GET',
-        headers: authHeader()
+        headers: { 'Content-Type': 'application/json' }
     };
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
@@ -65,7 +65,7 @@ function register(user) {
 function update(user) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json' },
         body: JSON.stringify(user)
     };
 
@@ -76,7 +76,7 @@ function update(user) {
 function _delete(id) {
     const requestOptions = {
         method: 'DELETE',
-        headers: authHeader()
+        headers: { 'Content-Type': 'application/json' }
     };
 
     return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);

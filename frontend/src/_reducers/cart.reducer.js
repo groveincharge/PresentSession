@@ -8,7 +8,7 @@ const initState = {
          total: 0
    }
 
-export const cartReducer= (state = initState, action)=>{
+export const cart= (state = initState, action)=>{
 
   if(action.type === cartConstants.GETALL_PRODUCT){
     return {
