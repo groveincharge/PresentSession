@@ -28,6 +28,10 @@ const userSchema = mongoose.Schema({
 		min: 6,
 		max: 1024
 	},
+	authenticated: {
+            type: Boolean,
+			required: true
+	},
 	createdDate: {
 		type: Date,
 		required: true,
@@ -35,6 +39,6 @@ const userSchema = mongoose.Schema({
 	    }
 });
 
-//userSchema.set('toJSON', { virtuals: true });
+userSchema.set('toJSON', { virtuals: true });
 
 module.exports = mongoose.model('Users', userSchema);

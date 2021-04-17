@@ -56,8 +56,21 @@ async function authenticate(req, res, next) {
                   console.log(`req.session.id: ${JSON.stringify(req.session.id)}\n`);
                   console.log(`req.user: ${JSON.stringify(req.user)}\n`);
 
+                  req.user.authenticated = req.isAuthenticated();
+
+                 // if (req.isAuthenticated()) {
+                 //   res.status(201).json(req.user)
+               // }  
+              //else
+               //  {
+               //res.status(401).json({
+               //isAuthenticated: req.isAuthenticated(),
+              // message: 'You must be registered to login.'
+              // })
+             // }
+
                   userService.authenticate(req.user)
-                  .then(user => user ? res.json(user) : res.status(400).json({ message: 'Email or password is incorrect' }))
+                 .then(user => user ? res.json(user) : res.status(400).json({ message: 'Email or password is incorrect' }))
                   .catch(err => next(err));
 
               })

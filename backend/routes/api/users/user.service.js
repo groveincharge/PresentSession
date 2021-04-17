@@ -35,12 +35,13 @@ async function create(userParam) {
     }
 
     const user = new User({
-                         _id: new mongoose.Types.ObjectId(),
+                   _id: new mongoose.Types.ObjectId(),
                    firstName: userParam.firstName,
                    lastName: userParam.lastName,
                    email: userParam.email,
-                   password: bcrypt.hashSync(userParam.password, 10) // hash password
-    });
+                   password: bcrypt.hashSync(userParam.password, 10), // hash password
+                   authenticated: false,
+                  });
 
     // save user
     await user.save();
