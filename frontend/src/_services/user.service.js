@@ -11,28 +11,41 @@ export const userService = {
     delete: _delete
 };
 
-function login(user) {
+function login(email, password) {
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(user)
+        body: JSON.stringify({ email, password })
     };
 
-     fetch(`${config.apiUrl}/users/authenticate`, requestOptions)
+    return fetch(`${config.apiUrl}/login`, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('authenticated', JSON.stringify(user.authenticated));
             localStorage.setItem('user', JSON.stringify(user));
-            console.log(`user from inside user.service. authenticate ${JSON.stringify(user)}`);
+
             return user;
         });
 }
 
 function logout() {
-    // remove user from local storage to log user out
-    localStorage.removeItem('user');
+    const requestOptions = {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    };
+
+    return fetch(`${config.apiUrl}/logout`, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+           // localStorage.removeItem('user');
+            return user;
+        });
 }
+
+//function logout() {
+    // remove user from local storage to log user out
+  //  localStorage.removeItem('user');
+//}
 
 function getAll() {
     const requestOptions = {
@@ -40,7 +53,7 @@ function getAll() {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -49,7 +62,7 @@ function getById(id) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/${id}`, requestOptions).then(handleResponse);
 }
 
 function register(user) {
@@ -59,7 +72,7 @@ function register(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/register`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/register`, requestOptions).then(handleResponse);
 }
 
 function update(user) {
@@ -69,7 +82,7 @@ function update(user) {
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -79,7 +92,7 @@ function _delete(id) {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${config.apiUrl}/users/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {
@@ -89,7 +102,7 @@ function handleResponse(response) {
         if (!response.ok) {
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
-                logout();
+               // logout();
                 location.reload(true);
             }
             const error = (data && data.message) || response.statusText;

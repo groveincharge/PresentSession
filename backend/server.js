@@ -47,12 +47,13 @@ const app = express();
 //models & routes
 app.use('uploads',express.static('./../frontend/public/uploads'));
 app.use('/',require('./routes/home'));
-//app.use('/register', require('./routes/api/register'));
-//app.use('/login', require('./routes/api/login'));
+app.use('/register', require('./routes/api/register'));
+app.use('/login', require('./routes/api/login'));
 //app.use('/orders', require('./routes/api/order'));
 //app.use('/product', require('./routes/api/product'));
 //app.use('/contact', require('./routes/api/contact'));
-app.use('/users', require('./routes/api/users/users.controller'));
+//app.use('/users', require('./routes/api/users/users.controller'));
+app.use('/logout', require('./routes/api/logout'));
 
 // configure passport.js to use the local strategy
 passport.use(new LocalStrategy(

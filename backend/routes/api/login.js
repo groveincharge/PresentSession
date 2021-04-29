@@ -18,15 +18,15 @@ router.get('/', (req, res) => {
     if (req.isAuthenticated()) {
        res.status(200).json({
           isAuthenticated: req.isAuthenticated(),
-           loggedInUser: req.user,
-           auth_msg: 'User Authenticated and logged In'
+           user: req.user,
+           auth: 'User Authenticated and logged In'
         })
        } else 
         if (!req.isAuthenticated()) {
           res.status(401).json({
             isAuthenticated: req.isAuthenticated(),
-           loggedInUser: req.user,
-           auth_msg: 'Register And/Or Login To Access!'
+           user: {},
+           auth: 'Register And/Or Login To Access!'
           })
         }
 
@@ -55,7 +55,6 @@ router.get('/', (req, res) => {
   let errors = validationResult(req);
   console.log(`errors ${JSON.stringify(errors)}`)
   if (!errors.isEmpty()) {
-      req.session.errors = errors;
       errors.errors.map(error => {
         console.log(`Login error from POST: ${JSON.stringify(error.msg)}`)
       })
@@ -75,8 +74,6 @@ router.get('/', (req, res) => {
     console.log(`req.user: ${JSON.stringify(req.user)}\n`);
 
     req.login(passportUser, (err) => {
-      req.session.passportUser = req.user;
-      req.session.isLoaded = true;
 
       console.log('Inside req.login() callback\n');
        console.log(`req.session.cookie ${JSON.stringify(req.session.cookie)}\n`);
@@ -86,18 +83,20 @@ router.get('/', (req, res) => {
       console.log(`req.session.id: ${JSON.stringify(req.session.id)}\n`);
       console.log(`req.user: ${JSON.stringify(req.user)}\n`);
 
+      req.user.auth = req.isAuthenticated();
+
        if (req.isAuthenticated()) {
            res.status(201).json({
-            isAuthenticated: req.isAuthenticated(),
-            loggedInUser: req.user,
-            auth_msg: `Welcome ${req.user.firstName}! to norfolkautodetail.com.`
+            auth: req.isAuthenticated(),
+            user: req.user,
+            message: `Welcome ${req.user.firstName}! to norfolkautodetail.com.`
            })
        }  
      else
         {
       res.status(401).json({
-      isAuthenticated: req.isAuthenticated(),
-      auth_msg: 'You must be registered to login.'
+      auth: req.isAuthenticated(),
+      message: 'You must be registered to login.'
       })
      }
   })

@@ -9,7 +9,7 @@ class LoginPage extends React.Component {
         super(props);
         console.log('this.props from inside LoginPage',props)
         // reset login status
-        this.props.logout();
+       // this.props.logout();
 
         this.state = {
             email: '',
@@ -77,8 +77,7 @@ function mapState(state) {
 }
 
 const actionCreators = {
-    login: userActions.login,
-    logout: userActions.logout
+    login: userActions.login
 };
 
 const connectedLoginPage = connect(mapState, actionCreators)(LoginPage);

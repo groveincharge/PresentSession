@@ -28,7 +28,7 @@ const userSchema = mongoose.Schema({
 		min: 6,
 		max: 1024
 	},
-	authenticated: {
+	auth: {
             type: Boolean,
 			required: true
 	},

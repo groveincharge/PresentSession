@@ -13,26 +13,21 @@ export const userActions = {
 };
 
 function login(email, password) {
-
-    const user = {
-           email,
-           password
-          };
-    
     return dispatch => {
-        dispatch(request(user));
-        userService.login(user)
-            .then(user => { 
-                    console.log(`user from inside user.actions then ${JSON.stringify(user)}`);
+        dispatch(request({ email }));
+
+        userService.login(email, password)
+            .then(
+                user => { 
+                    console.log(`user from inside user.actions login() ${JSON.stringify(user)}`);
                     dispatch(success(user));
                     history.push('/');
-                    dispatch(alertActions.success('Login successful'));
                 },
                 error => {
-                    console.log(`error from inside user.actions then ${JSON.stringify(error)}`);
                     dispatch(failure(error.toString()));
                     dispatch(alertActions.error(error.toString()));
-                });
+                }
+            );
     };
 
     function request(user) { return { type: userConstants.LOGIN_REQUEST, user } }
@@ -40,10 +35,33 @@ function login(email, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
+
 function logout() {
-    userService.logout();
-    return { type: userConstants.LOGOUT };
+    return dispatch => {
+        dispatch(request());
+        userService.logout()
+            .then(auth => { 
+                    console.log(`auth from inside user.actions logout() ${JSON.stringify(auth)}`)
+                    dispatch(success());
+                    history.push('/login');
+                    dispatch(alertActions.success('Logout successful'));
+                },
+                error => {
+                    console.log(`error from inside user.actions then() error ${JSON.stringify(JSON.stringify(error))}`)
+                    dispatch(failure(error.toString()));
+                    dispatch(alertActions.error(error.toString()));
+                });
+    };
+
+    function request() { return { type: userConstants.LOGOUT_REQUEST} }
+    function success(auth) { return { type: userConstants.LOGOUT_SUCCESS, auth } }
+    function failure(error) { return { type: userConstants.LOGOUT_FAILURE, error } }
 }
+
+//function logout() {
+  //  userService.logout();
+  //  return { type: userConstants.LOGOUT };
+//}
 
  function register(user) {
     return dispatch => {

@@ -9,6 +9,7 @@ const User = db.User;
 module.exports = {
     authenticate,
     getAll,
+    logout,
     getById,
     create,
     update,
@@ -28,6 +29,10 @@ async function getById(id) {
     return await User.findById(id);
 }
 
+async function logout(id) {
+    return await User.findOne(id);
+}
+
 async function create(userParam) {
     // validate
     if (await User.findOne({ email: userParam.email })) {
@@ -40,7 +45,7 @@ async function create(userParam) {
                    lastName: userParam.lastName,
                    email: userParam.email,
                    password: bcrypt.hashSync(userParam.password, 10), // hash password
-                   authenticated: false,
+                   auth: false,
                   });
 
     // save user

@@ -10,7 +10,7 @@ const router = express.Router();
 //router.use('/product', require('/product'));
 //router.use('/order', require('/order'));
 //router.use('/create', require('/create'));
-router.use('/users', require('/users/users.controller'));
+//router.use('/users', require('/users/users.controller'));
 
 
 module.exports = router;
