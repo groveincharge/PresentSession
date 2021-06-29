@@ -1,16 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-//router.use('/getEmail', require('/getEmail'));
-//router.use('/getId', require('/getId'));
-//router.use('/login', require('/login'));
-//router.use('/logout', require('/logout'));
-//router.use('/register', require('/register'));
-//router.use('/contact', require('/contact'));
-//router.use('/product', require('/product'));
-//router.use('/order', require('/order'));
-//router.use('/create', require('/create'));
-//router.use('/users', require('/users/users.controller'));
-
+router.use('/comments', require('./comments'));
+router.use('/products', require('./products'));
+router.use('/orders', require('./orders'));
+router.use('/users', require('./users'));
+//router.get('/services', require('./services'))
 
 module.exports = router;

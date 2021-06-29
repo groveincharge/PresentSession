@@ -15,45 +15,8 @@ const bcrypt = require('bcrypt');
 const errorHandler = require('./_helpers/error-handler');
 const db = require('./_helpers/db');
 const User = db.User;
+const routes = require('./routes')
 
-// create the server
-const app = express();
-
-//express middleware
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: false }));
-  app.use(cookieParser());
-  app.use(fileUpload());
-  app.use(cors());
-
-   //passport and session middleware
-   app.use(session({
-    // Set the session ID
-    genid: (req) => {
-      console.log(`Inside the server.js session middleware ${req.sessionID}`);
-      return uuid() //use UUIDs for session IDs
-    },
-    store: new FileStore(),
-    secret: config.secret,
-    cookie: {maxAge: 600000, path: '/', httpOnly: true, secure: false},
-    resave: false,
-    saveUninitialized: false
-    }));
-   
-  app.use(passport.initialize());
-  app.use(passport.session());
-   app.use(flash());
-
-//models & routes
-app.use('uploads',express.static('./../frontend/public/uploads'));
-app.use('/',require('./routes/home'));
-app.use('/register', require('./routes/api/register'));
-app.use('/login', require('./routes/api/login'));
-//app.use('/orders', require('./routes/api/order'));
-//app.use('/product', require('./routes/api/product'));
-//app.use('/contact', require('./routes/api/contact'));
-//app.use('/users', require('./routes/api/users/users.controller'));
-app.use('/logout', require('./routes/api/logout'));
 
 // configure passport.js to use the local strategy
 passport.use(new LocalStrategy(
@@ -76,10 +39,6 @@ passport.use(new LocalStrategy(
   }
 ));
 
-// global error handler
-app.use(errorHandler);
-
-
 // tell passport how to serialize the user
 passport.serializeUser((user, done) => {
   console.log(`user from inside serialize ${JSON.stringify(user)}`);
@@ -87,16 +46,64 @@ passport.serializeUser((user, done) => {
      done(null, user._id);
    });
 
-   
-passport.deserializeUser(function(_id, done) {
-  User.findById(_id, function(err, user) {
-    console.log(`user from inside deserialize ${JSON.stringify(user)}`);
-    done(err, user);
-  });
-});
+passport.deserializeUser(function(id, done) {
+  User.findById(id, function(err, user) {
+       console.log(`user from inside deserialize ${JSON.stringify(user)}`);
+       done(err, user)
+     });
+   });
+
+// create the server
+const app = express();
+
+//express middleware
+  app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(cookieParser());
+  app.use(fileUpload());
+  app.use(cors());
+ 
+/*
+   app.use((req, res, next) =>{
+    res.header('Access-Control-Allow-Origin', 'http://localhost:7000');
+   res.header('Access-Control-Allow-Headers',
+              'Origin, X-Requested-With, X-Powered-By, Etag, Set-Cookie, cookie, Content-type, Accept, Authurization');
+     res.header('Access-Control-Allow-Credentials', true);
+     res.header('Access-Control-Expose-Headers', 'X-Powered-By, Etag, X-Requested-With');
+     req.header('Content-Type', 'application/json');
+     if (req.method === 'OPTIONS') {
+       res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+       return res.status(200).json({});
+     }
+    next()
+     })
+  */
+      //passport and session middleware
+   app.use(session({
+    // Set the session ID
+    genid: (req) => {
+      console.log(`Inside the server.js session middleware ${req.sessionID}`);
+      return uuid() //use UUIDs for session IDs
+    },
+    store: new FileStore(),
+    secret: config.secret,
+    cookie: {maxAge: 6000000, path: '/', httpOnly: true, secure: false},
+    resave: false,
+    saveUninitialized: false
+    }));
+
+    app.use(passport.initialize());
+    app.use(passport.session()); 
+
+   //models & routes
+app.use('uploads',express.static('./../frontend/public/uploads'));
+app.use(routes);
+
+// global error handler
+app.use(errorHandler);
 
 // start server
-const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 7000;
+const port = process.env.NODE_ENV === 'production' ? (process.env.PORT || 80) : 4000;
 const server = app.listen(port, function () {
     console.log('Server listening on port ' + port);
-});
+}); 

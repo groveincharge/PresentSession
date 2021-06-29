@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const router = express.Router();
 const db = require('./../_helpers/db');
 const User = db.User;
-const {authmiddleware} = require('./auth');
+const ensureAuthenticated = require('./ensureAuthenticated');
 
 router.get('/', function(req, res, next) {
    User.find()

@@ -11,11 +11,14 @@ export function product(state = initialState, action) {
     case productConstants.ADD_PRODUCT_REQUEST:
       return {
         requesting: true,
-        product: Object.assign({}, state)
+        ...state,
+        prod: action.prod
       };
     case productConstants.ADD_PRODUCT_SUCCESS:
       return {
-        product: Object.assign({}, state, action.product)
+        requesting: false,
+        ...state,
+        prod: action.prod
       };
     case productConstants.ADD_PRODUCT_FAILURE:
       return {};

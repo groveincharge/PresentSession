@@ -31,5 +31,5 @@ module.exports = {
     User: require('./../models/User'),
     Product: require('./../models/Product'),
     Order: require('./../models/Order'),
-    Contact: require('./../models/Contact')
+    Contact: require('../models/Comment')
       }

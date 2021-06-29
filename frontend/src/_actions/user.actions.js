@@ -35,14 +35,13 @@ function login(email, password) {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-
 function logout() {
     return dispatch => {
         dispatch(request());
         userService.logout()
-            .then(auth => { 
-                    console.log(`auth from inside user.actions logout() ${JSON.stringify(auth)}`)
-                    dispatch(success());
+            .then(loggedOut => { 
+                    console.log(`loggedOut from inside user.actions logout() ${JSON.stringify(loggedOut)}`)
+                    dispatch(success(loggedOut));
                     history.push('/login');
                     dispatch(alertActions.success('Logout successful'));
                 },
@@ -54,7 +53,7 @@ function logout() {
     };
 
     function request() { return { type: userConstants.LOGOUT_REQUEST} }
-    function success(auth) { return { type: userConstants.LOGOUT_SUCCESS, auth } }
+    function success(loggedOut) { return { type: userConstants.LOGOUT_SUCCESS, loggedOut} }
     function failure(error) { return { type: userConstants.LOGOUT_FAILURE, error } }
 }
 
@@ -94,7 +93,7 @@ function getAll() {
 
         userService.getAll()
             .then(
-                users => dispatch(success(users)),
+                users => dispatch(success(users.users)),
                 error => dispatch(failure(error.toString()))
             );
     };

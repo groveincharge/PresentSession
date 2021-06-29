@@ -28,9 +28,13 @@ const userSchema = mongoose.Schema({
 		min: 6,
 		max: 1024
 	},
-	auth: {
+	admin: {
             type: Boolean,
 			required: true
+	},
+	mySession: {
+        type: String,
+		required: true
 	},
 	createdDate: {
 		type: Date,

@@ -1,29 +1,29 @@
-export const productService = {
-    addProduct,
+export const commentService = {
+    addComment,
     getAll,
-    getByProductId,
-    deleteProduct,
-    updateProduct
-};
+    getByCommentId,
+    deleteComment,
+    updateComment
+    };
 
 import config from 'config';
 
-function addProduct(product) {
-    console.log('product.service frontend addProduct',product)
+function addComment(user) {
+    console.log('comment.service to frontend addComment',user)
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(product)
+        body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/api/products`, requestOptions)
+    return fetch(`${config.apiUrl}/api/comments`, requestOptions)
         .then(handleResponse)
-        .then(product => {
-            console.log('product.service frontend product',product)
+        .then(comment => {
+            console.log('comment.service from frontend ',comment)
             // store user details and jwt token in local storage to keep user logged in between page refreshes
-            localStorage.setItem('product', JSON.stringify(product));
+            localStorage.setItem('comment', JSON.stringify(comment));
 
-            return product;
+            return comment;
         });
 };
 
@@ -33,21 +33,20 @@ function getAll() {
         headers: { 'Content-Type': 'application/json' }
     };
 
-    return fetch(`${config.apiUrl}/api/product/getAll`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/comments/getAll`, requestOptions).then(handleResponse);
 }
 
-
-function getByProductId(id) {
+function getByCommentId(id) {
     const requestOptions = {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         //credentials: "include"
     };
 
-    return fetch(`${config.apiUrl}/api/products/getByProductId/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/comments/getByCommentId/${id}`, requestOptions).then(handleResponse);
 }
 
-function updateProduct(product) {
+function updateComment(user) {
     const requestOptions = {
         method: 'PUT',
         headers: {'Content-Type': 'application/json' },
@@ -55,18 +54,18 @@ function updateProduct(product) {
        // credentials: "include"
     };
 
-    return fetch(`${config.apiUrl}/api/products/updateProduct/${product._id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/api/comments/updateUser/${user.id}`, requestOptions).then(handleResponse);;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
-function deleteProduct(id) {
+function deleteComment(id) {
     const requestOptions = {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
       //  credentials: "include"
     };
 
-    return fetch(`${config.apiUrl}/api/products/deleteProduct/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/api/comments/deleteComment/${id}`, requestOptions).then(handleResponse);
 }
 
 function handleResponse(response) {

@@ -10,8 +10,8 @@ import { PrivateRoute } from './../_components/PrivateRoute';
 import { Intro } from './../_components/Intro';
 import { Nav } from './../_components/Nav';
 import {VehicleNav} from './../ServicePage/Vehicles/VehicleNav';
-import { About } from './../_components/About';
-import { Contact } from './../_components/Contact';
+import { About } from './../About';
+import { ContactPage } from './../ContactPage';
 import { HomePage } from './../HomePage';
 import { LoginPage } from './../LoginPage';
 import { RegisterPage } from './../RegisterPage';
@@ -50,7 +50,7 @@ class App extends React.Component {
                                 <Route path="/login" component={LoginPage}/>
                                 <Route path="/register" component={RegisterPage} />
                                 <Route path="/about" component={About} />
-                                <PrivateRoute path="/contact" component={Contact} />
+                                <PrivateRoute path="/contact" component={ContactPage} />
                                 <PrivateRoute path="/product" component={ProductPage} />
                                 <PrivateRoute path="/service" component={ServicePage} />
                                 <PrivateRoute path="/cart" component={CartPage} />

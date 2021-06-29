@@ -2,13 +2,12 @@ import React, {useState, useEffect} from 'react';
 import { connect } from 'react-redux';
 import { productActions } from './../_actions';
 import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-import   {OrderPage} from './AddPicture';
+//import   {OrderPage} from './AddPicture';
 import axios from 'axios';
 
  const ProductPage = (props) => {
 
-  const { requesting, product, addProduct } = props;
-  const { getproducts, getAll } = props;
+  const { requesting, getAll, addProduct, prod } = props;
   console.log('productPage props',props)
 
   const [toFilePath, setToFilePath] = useState(" ");
@@ -47,7 +46,7 @@ const handleSubmit = event => {
   const formData = new FormData();
   formData.append('file', file);
 
-   axios.post('http://localhost:7000/products/upload', formData, {
+   axios.post('http://localhost:4000/api/products', formData, {
       headers: {
         'Content-Type': 'multipart/form-data'
       },
@@ -59,7 +58,7 @@ const handleSubmit = event => {
     })
     .catch(err => console.log(err))
     
-  const prod = {
+        prod = {
             itemName,
             itemPrice,
             description,
@@ -71,7 +70,7 @@ const handleSubmit = event => {
 
   const uploadedProduct = () => {
         useEffect(() => {
-           axios.get('http://localhost:7000/products/getAll')
+           axios.get('http://localhost:4000/api/products/getAll')
            .then(res => {
                 getAll(res.data)
                 setProductList(res.data)
@@ -127,18 +126,14 @@ const handleSubmit = event => {
                         }
                     </div>
          </form>
-         <div>
-           <OrderPage/>
-         </div>
        </div>
    );
 }
 
 function mapState(state) {
-return {
-    product: state.product,
-    items: state.allProduct
-   }
+  const { product} = state;
+  const { requesting, prod } = product;
+  return { requesting, prod };
 }
 
 const actionCreators = {
